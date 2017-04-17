@@ -7,10 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
+<head>
     <title>Hello World!</title>
-  </head>
-  <body>
-  Hello World!
-  </body>
+</head>
+<body>
+<a href="lib/editor.md-v1.5.0/examples/index.html">Editor.md</a>
+<a href="editormd.jsp">Editor</a>
+</body>
 </html>
