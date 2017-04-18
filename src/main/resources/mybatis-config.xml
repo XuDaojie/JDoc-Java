@@ -33,5 +33,6 @@
     <mappers>
         <mapper resource="mapper/account.xml"/>
         <mapper resource="mapper/project.xml"/>
+        <mapper resource="mapper/markdown.xml"/>
     </mappers>
 </configuration>

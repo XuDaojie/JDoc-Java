@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.xudaojie.jdoc.model.MarkdownModel">
+    <select id="get" parameterType="long" resultType="io.github.xudaojie.jdoc.model.MarkdownModel">
+        select * from project where id = #{id}
+    </select>
+    <select id="getListByOwner" resultType="io.github.xudaojie.jdoc.model.MarkdownModel">
+        select * from markdown where owner = #{owner}
+    </select>
+    <update id="update">
+        update markdown set owner = #{owner}, creator = #{creator} where id = #{id}
+    </update>
+    <insert id="insert">
+        insert into markdown(project_id, module_id, name, content, creator, handler) values (#{projectId}, #{moduleId}, #{name},  #{content}, #{creator}, #{handler})
+    </insert>
+</mapper>

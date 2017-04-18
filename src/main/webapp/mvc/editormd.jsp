@@ -16,7 +16,15 @@
           type="image/x-icon"/>
     <script type="text/javascript">
         function submitMarkdown() {
-            console.log(editor.getMarkdown())
+            $.get('create_markdown.do',
+                {
+                    project_id: 1,
+                    name: "Hell Markdown",
+                    markdown: editor.getMarkdown()
+                }
+                , function (data, status) {
+                    alert(status)
+                });
         }
         function insertApiTempl() {
             editor.insertValue("`Template`")
@@ -25,6 +33,8 @@
 </head>
 <body>
 <input type="button" value="插入接口模板" onclick="insertApiTempl()"><br>
+<input id="test" type="button" value="Test插入接口模板"><br>
+接口名:<input name="name"><br>
 <div id="layout">
     <header>
     </header>
