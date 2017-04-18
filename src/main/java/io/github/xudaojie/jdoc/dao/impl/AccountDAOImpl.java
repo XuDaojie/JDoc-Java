@@ -17,7 +17,7 @@ public class AccountDAOImpl extends BaseDAO implements AccountDAO {
 
     @Override
     public AccountModel getByName(String username) {
-        SqlSession sqlSession = sSqlSessionFactory.openSession();
+        SqlSession sqlSession = getSqlSessionFactory().openSession();
         AccountModel accountModel = sqlSession.selectOne("getByName", username);
         sqlSession.close();
         return accountModel;

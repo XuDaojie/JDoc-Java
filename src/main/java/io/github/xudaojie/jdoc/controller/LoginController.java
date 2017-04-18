@@ -1,11 +1,11 @@
 package io.github.xudaojie.jdoc.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import io.github.xudaojie.jdoc.dao.AccountDAO;
-import io.github.xudaojie.jdoc.dao.impl.AccountDAOImpl;
 import io.github.xudaojie.jdoc.model.AccountModel;
 import io.github.xudaojie.jdoc.util.TextUtils;
 
@@ -15,7 +15,16 @@ import io.github.xudaojie.jdoc.util.TextUtils;
 @Controller
 public class LoginController {
 
-    private AccountDAO mAccountDAO = new AccountDAOImpl();
+    @Autowired
+    private AccountDAO mAccountDAO;
+
+    public AccountDAO getAccountDAO() {
+        return mAccountDAO;
+    }
+
+    public void setAccountDAO(AccountDAO accountDAO) {
+        mAccountDAO = accountDAO;
+    }
 
     @RequestMapping("login.form")
     public String login(@RequestParam(value = "username") String username,
