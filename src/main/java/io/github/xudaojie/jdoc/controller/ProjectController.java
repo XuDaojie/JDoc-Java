@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import io.github.xudaojie.jdoc.dao.ProjectDAO;
 import io.github.xudaojie.jdoc.model.ProjectModel;
 
@@ -43,7 +45,7 @@ public class ProjectController {
     }
 
     @RequestMapping("project.form")
-    public String project(Model model) {
+    public String project(Model model, HttpServletRequest request) {
         List<ProjectModel> projectModels = mProjectDAO.getListByOwner(1L);
         String projectNames = "";
         for (ProjectModel projectModel:
@@ -51,11 +53,14 @@ public class ProjectController {
             projectNames += projectModel.getName() + "， ";
         }
         model.addAttribute("project_names", projectNames);
+        model.addAttribute("project_list", projectModels);
+//        request.setAttribute("project_list", projectModels);
+//        request.setAttribute("project_names", projectNames);
         return "project";
     }
 
     @RequestMapping("project_main.form")
-    public String projectMain(Model model) {
+    public String projectMain(@RequestParam("project_id") String projectId, Model model) {
         model.addAttribute("project_name", "Hello World!");
         return "project_main";
     }

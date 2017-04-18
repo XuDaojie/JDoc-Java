@@ -16,11 +16,22 @@
           type="image/x-icon"/>
     <script type="text/javascript">
         function submitMarkdown() {
+            var mdName = $("#name").val();
+            var mdContent = editor.getMarkdown();
+            if(!mdName || mdName === '') {
+                alert('接口名不能为空');
+                return;
+            }
+            if(!mdContent || mdContent === '') {
+                alert('Markdown不能为空');
+                return;
+            }
+
             $.get('create_markdown.do',
                 {
                     project_id: 1,
-                    name: "Hell Markdown",
-                    markdown: editor.getMarkdown()
+                    name: mdName,
+                    markdown: mdContent
                 }
                 , function (data, status) {
                     alert(status)
@@ -34,7 +45,7 @@
 <body>
 <input type="button" value="插入接口模板" onclick="insertApiTempl()"><br>
 <input id="test" type="button" value="Test插入接口模板"><br>
-接口名:<input name="name"><br>
+接口名:<input id="name" name="name"><br>
 <div id="layout">
     <header>
     </header>
