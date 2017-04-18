@@ -1,36 +1,32 @@
 package io.github.xudaojie.jdoc.dao.impl;
 
-import org.apache.ibatis.session.SqlSession;
-
 import io.github.xudaojie.jdoc.dao.AccountDAO;
 import io.github.xudaojie.jdoc.model.AccountModel;
 
 /**
  * Created by xdj on 2017/4/18.
  */
-public class AccountDAOImpl extends BaseDAO implements AccountDAO {
+public class AccountDAOImpl extends BaseDAO<AccountModel> implements AccountDAO {
 
     @Override
     public AccountModel get(long id) {
-        return null;
+        return super.selectOne(id);
     }
 
     @Override
     public AccountModel getByName(String username) {
-        SqlSession sqlSession = getSqlSessionFactory().openSession();
-        AccountModel accountModel = sqlSession.selectOne("getByName", username);
-        sqlSession.close();
+        AccountModel accountModel = selectOne("getByName", username);
         return accountModel;
     }
 
     @Override
     public int update(AccountModel accountModel) {
-        return 0;
+        return super.update(accountModel);
     }
 
     @Override
     public int insert(AccountModel accountModel) {
-        return 0;
+        return super.insert(accountModel);
     }
 
 
