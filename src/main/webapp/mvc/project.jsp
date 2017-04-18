@@ -8,9 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Project</title>
+    <title>项目列表</title>
 </head>
 <body>
-项目列表
+<a href="create_project.jsp">新建项目</a><br>
+--------------
+已创建项目<<br>
+${project_names}
 </body>
 </html>

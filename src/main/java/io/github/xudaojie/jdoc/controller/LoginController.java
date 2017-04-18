@@ -33,7 +33,8 @@ public class LoginController {
         AccountModel accountModel = mAccountDAO.getByName(username);
         if (accountModel!= null &&
                 TextUtils.equals(password, accountModel.getPassword())) {
-            return "projects";
+//            return "project";
+            return "redirect:/project.form";
         }
 
         return "login_failed";

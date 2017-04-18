@@ -25,5 +25,6 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
     <bean class="io.github.xudaojie.jdoc.dao.impl.AccountDAOImpl" id="accountDAO" parent="baseDAO"/>
+    <bean class="io.github.xudaojie.jdoc.dao.impl.ProjectDAOImpl" id="projectDAO" parent="baseDAO"/>
     <!-- DAO end -->
 </beans>

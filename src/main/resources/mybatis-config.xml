@@ -32,5 +32,6 @@
 
     <mappers>
         <mapper resource="mapper/account.xml"/>
+        <mapper resource="mapper/project.xml"/>
     </mappers>
 </configuration>

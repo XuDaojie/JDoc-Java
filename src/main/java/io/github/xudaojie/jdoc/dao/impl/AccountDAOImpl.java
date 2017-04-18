@@ -11,7 +11,7 @@ import io.github.xudaojie.jdoc.model.AccountModel;
 public class AccountDAOImpl extends BaseDAO implements AccountDAO {
 
     @Override
-    public AccountModel get(int id) {
+    public AccountModel get(long id) {
         return null;
     }
 
