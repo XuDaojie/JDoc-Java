@@ -11,8 +11,7 @@
     <title>${project_name}</title>
 </head>
 <body>
-${project_name}
-----------------<<br>
-
+${project_name}<br>
+<a href="create_markdown.form">新建页面</a>
 </body>
 </html>
