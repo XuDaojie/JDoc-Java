@@ -15,8 +15,7 @@ public class AccountDAOImpl extends BaseDAO<AccountModel> implements AccountDAO 
 
     @Override
     public AccountModel getByName(String username) {
-        AccountModel accountModel = selectOne("getByName", username);
-        return accountModel;
+        return selectOne("getByName", username);
     }
 
     @Override
