@@ -53,4 +53,10 @@ public class ProjectController {
         model.addAttribute("project_names", projectNames);
         return "project";
     }
+
+    @RequestMapping("project_main.form")
+    public String projectMain(Model model) {
+        model.addAttribute("project_name", "Hello World!");
+        return "project_main";
+    }
 }
