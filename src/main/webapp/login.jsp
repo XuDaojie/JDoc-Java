@@ -11,9 +11,9 @@
     <title>登录</title>
 </head>
 <body>
-<form action="content.jsp">
-    Username:<input id="username" type="text"><br>
-    Password:<input id="password" type="password"><br>
+<form action="login.form" method="get">
+    Username:<input name="username" type="text"><br>
+    Password:<input name="password" type="password"><br>
     <input type="submit" value="Submit">
 </form>
 </body>
