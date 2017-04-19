@@ -19,6 +19,7 @@ public class CharsetEncodeFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8"); // 控制浏览器行为
         response.setCharacterEncoding("UTF-8"); // 控制输出流格式(getWriter())
 

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import io.github.xudaojie.jdoc.dao.AccountDAO;
@@ -43,11 +45,12 @@ public class AccountController {
         return "login_failed";
     }
 
-    @RequestMapping("login.do")
+    @RequestMapping(value = "login.do", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String loginDo(@RequestParam(value = "username") String username,
-                                       @RequestParam(value = "password") String password,
-                                       HttpSession session) {
+                          @RequestParam(value = "password") String password,
+                          HttpServletRequest request, HttpServletResponse response,
+                          HttpSession session) {
         BaseResponseBody responseBody = new BaseResponseBody();
 
         AccountModel accountModel = mAccountDAO.getByName(username);

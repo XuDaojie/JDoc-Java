@@ -9,15 +9,25 @@
 <html lang="zh">
 <%
     String action = "save_markdown.do";
-    String projectId = request.getParameter("project_id");
+    Long projectId = null;
+    Long moduleId = null;
+    // todo 新增和编辑获取项目id方式待统一
+    if (request.getParameter("project_id") != null) {
+        projectId = Long.parseLong(request.getParameter("project_id"));
+    }
+    if (request.getParameter("module_id") != null) {
+        moduleId = Long.parseLong(request.getParameter("module_id"));
+    }
     Long id = null;
     String name = "";
     String markdown = "";
     MarkdownModel markdownModel = (MarkdownModel) request.getAttribute("markdown");
     if (markdownModel != null) {
-        markdown = markdownModel.getContent();
+        projectId = markdownModel.getProjectId();
+        moduleId = markdownModel.getModuleId();
         id = markdownModel.getId();
         name = markdownModel.getName();
+        markdown = markdownModel.getContent();
     } else {
         action = "create_markdown.do";
     }
@@ -30,28 +40,38 @@
     <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico"
           type="image/x-icon"/>
     <script type="text/javascript">
+        var markdownId = <%=id%>;
+        var moduleId = <%=moduleId%>;
+        var formAction = '<%=action%>';
+
         function submitMarkdown() {
             var mdName = $("#name").val();
             var mdContent = editor.getMarkdown();
-            if(!mdName || mdName === '') {
+            if (!mdName || mdName === '') {
                 alert('接口名不能为空');
                 return;
             }
-            if(!mdContent || mdContent === '') {
+            if (!mdContent || mdContent === '') {
                 alert('Markdown不能为空');
                 return;
             }
 
-            $.post('<%=action%>',
+            $.post(formAction,
                 {
-                    id:  <%=id%>,
+                    id: markdownId,
                     project_id: <%=projectId%>,
+                    module_id: moduleId,
                     name: mdName,
                     markdown: mdContent
-                }
-                , function (data, status) {
-                    alert(status);
-                    // todo if success action = save_markdown.do
+                },
+                function (data, status) {
+                    var result = JSON.parse(data);
+                    alert(result.msg);
+                    // 新建页面保存成功后变为编辑
+                    if(result.code === 0 && formAction !== 'save_markdown.do') {
+                        formAction = 'save_markdown.do';
+                        markdownId = result.id;
+                    }
                 });
         }
         function insertApiTempl() {

@@ -17,10 +17,12 @@ public class BaseResponseBody implements Serializable {
      * code = 2 密码错误
      * code = 3 系统已屏蔽此账号
      * code = 4 密码错误次数超过了最大的重试次数
+     * code = 102 请求错误
      */
 
     private int code;
     private String msg;
+    private Object data;
 
     public int getCode() {
         return code;
@@ -36,5 +38,13 @@ public class BaseResponseBody implements Serializable {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 }

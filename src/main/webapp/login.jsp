@@ -21,7 +21,19 @@
                 return;
             }
 
-            $.get("login.do",
+            $.ajax({
+                url: "login.do",
+                data: {
+                    username: username,
+                    password: password
+                },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success: function (data) {
+                    alert(data);
+                }
+            });
+
+            $.post("login.do",
                 {
                     username: username,
                     password: password
@@ -42,7 +54,7 @@
 <form action="login.form" method="get">
     Username:<input id="username" name="username" type="text"><br>
     Password:<input id="password" name="password" type="password"><br>
-    <input id="btn" type="button" value="Submit" onclick="login()">
+    <input id="btn" type="button" value="登录" onclick="login()">
 </form>
 </body>
 </html>

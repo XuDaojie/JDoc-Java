@@ -18,7 +18,8 @@ public class GreetingController {
         return "greeting"; // 跳转页面
     }
 
-    @RequestMapping("greeting.do")
+    // produces 在ajax调用时默认编码为ISO-8859-1
+    @RequestMapping(value = "greeting.do", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String greeting() {
         return "Hello World!"; // 返回字符串

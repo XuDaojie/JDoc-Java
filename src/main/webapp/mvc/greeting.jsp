@@ -18,6 +18,7 @@ Hello <%=name%>!<br>
 <%-- ${param_id}直接获取参数中的某个id --%>
 Hello ${name}!
 <h1 id="hello"></h1>
+<a href="greeting.jsp?parameter=中文">中文参数</a>
 <script src="lib/js/jquery.min.js"></script>
 <script type="text/javascript">
     $.get("greeting.do", function (data, status) {
