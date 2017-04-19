@@ -8,13 +8,41 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <script src="lib/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        function login() {
+            var username = $('#username').val();
+            var password = $('#password').val();
+            if(username === null || username === '') {
+                alert("用户名不能为空");
+                return;
+            } else if(password === null || password === '') {
+                alert("密码不能为空");
+                return;
+            }
+
+            $.get("login.do",
+                {
+                    username: username,
+                    password: password
+                },
+                function (data) {
+                    var result = JSON.parse(data);
+                    if(result.code === 0) {
+                        window.location.href="login.form";
+                    } else {
+                        alert(result.msg);
+                    }
+                })
+        }
+    </script>
     <title>登录</title>
 </head>
 <body>
 <form action="login.form" method="get">
-    Username:<input name="username" type="text"><br>
-    Password:<input name="password" type="password"><br>
-    <input type="submit" value="Submit">
+    Username:<input id="username" name="username" type="text"><br>
+    Password:<input id="password" name="password" type="password"><br>
+    <input id="btn" type="button" value="Submit" onclick="login()">
 </form>
 </body>
 </html>
