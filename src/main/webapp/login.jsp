@@ -21,17 +21,17 @@
                 return;
             }
 
-            $.ajax({
-                url: "login.do",
-                data: {
-                    username: username,
-                    password: password
-                },
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                success: function (data) {
-                    alert(data);
-                }
-            });
+//            $.ajax({
+//                url: "login.do",
+//                data: {
+//                    username: username,
+//                    password: password
+//                },
+//                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+//                success: function (data) {
+//                    alert(data);
+//                }
+//            });
 
             $.post("login.do",
                 {
@@ -39,11 +39,10 @@
                     password: password
                 },
                 function (data) {
-                    var result = JSON.parse(data);
-                    if (result.code === 0) {
+                    if (data.code === 0) {
                         window.location.href = "login.form";
                     } else {
-                        alert(result.msg);
+                        alert(data.msg);
                     }
                 })
         }
