@@ -42,7 +42,7 @@
                 return;
             }
 
-            $.get('<%=action%>',
+            $.post('<%=action%>',
                 {
                     id:  <%=id%>,
                     project_id: <%=projectId%>,
@@ -50,7 +50,8 @@
                     markdown: mdContent
                 }
                 , function (data, status) {
-                    alert(status)
+                    alert(status);
+                    // todo if success action = save_markdown.do
                 });
         }
         function insertApiTempl() {
