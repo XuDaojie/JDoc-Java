@@ -12,12 +12,12 @@ public class MarkdownDAOImpl extends BaseDAO<MarkdownModel> implements MarkdownD
 
     @Override
     public MarkdownModel get(long id) {
-        return null;
+        return selectOne(id);
     }
 
     @Override
     public List<MarkdownModel> getListByOwner(long ownerId) {
-        return null;
+        return selectList("getListByOwner", ownerId);
     }
 
     @Override

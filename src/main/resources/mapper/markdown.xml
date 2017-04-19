@@ -5,7 +5,7 @@
 <mapper namespace="io.github.xudaojie.jdoc.model.MarkdownModel">
     <select id="get" parameterType="long" resultType="io.github.xudaojie.jdoc.model.MarkdownModel">
         SELECT *
-        FROM project
+        FROM markdown
         WHERE id = #{id}
     </select>
     <select id="getListByOwner" resultType="io.github.xudaojie.jdoc.model.MarkdownModel">
@@ -20,7 +20,8 @@
     </select>
     <update id="update">
         UPDATE markdown
-        SET owner = #{owner}, creator = #{creator}
+        SET project_id = #{projectId}, module_id = #{moduleId}, name = #{name},
+            content    = #{content}, handler = #{handler}
         WHERE id = #{id}
     </update>
     <insert id="insert">

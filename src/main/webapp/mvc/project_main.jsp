@@ -21,14 +21,14 @@
 %>
 ${project_name}<br>
 -------------------<br>
-<a href="create_markdown.form">新建页面</a><br>
+<a href="create_markdown.form?project_id=<%=request.getParameter("project_id")%>">新建页面</a><br>
 ----------Module---------<br>
 <c:forEach var="item" items="<%=modelList%>">
-    <a href="editormd.form?id=${item.id}&project_id=${item.projectId}">${item.name}</a><br>
+    <a href="editormd.form?id=${item.id}">${item.name}</a><br>
 </c:forEach>
 ----------Markdown---------<br>
 <c:forEach var="item" items="<%=markdownList%>">
-    <a href="editormd.form?id=${item.id}&project_id=${item.projectId}">${item.name}</a><br>
+    <a href="editormd.form?id=${item.id}">${item.name}</a><br>
 </c:forEach>
 </body>
 </html>

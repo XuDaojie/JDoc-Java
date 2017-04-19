@@ -1,4 +1,4 @@
-<%--
+<%@ page import="io.github.xudaojie.jdoc.model.MarkdownModel" %><%--
   Created by IntelliJ IDEA.
   User: xdj
   Date: 2017/4/17
@@ -7,6 +7,21 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="zh">
+<%
+    String action = "save_markdown.do";
+    String projectId = request.getParameter("project_id");
+    Long id = null;
+    String name = "";
+    String markdown = "";
+    MarkdownModel markdownModel = (MarkdownModel) request.getAttribute("markdown");
+    if (markdownModel != null) {
+        markdown = markdownModel.getContent();
+        id = markdownModel.getId();
+        name = markdownModel.getName();
+    } else {
+        action = "create_markdown.do";
+    }
+%>
 <head>
     <meta charset="utf-8"/>
     <title>Simple example - Editor.md examples</title>
@@ -27,9 +42,10 @@
                 return;
             }
 
-            $.get('create_markdown.do',
+            $.get('<%=action%>',
                 {
-                    project_id: 1,
+                    id:  <%=id%>,
+                    project_id: <%=projectId%>,
                     name: mdName,
                     markdown: mdContent
                 }
@@ -45,44 +61,12 @@
 <body>
 <input type="button" value="插入接口模板" onclick="insertApiTempl()"><br>
 <input id="test" type="button" value="Test插入接口模板"><br>
-接口名:<input id="name" name="name"><br>
+接口名:<input id="name" name="name" value="<%=name%>"><br>
 <div id="layout">
     <header>
     </header>
     <div id="editormd">
-         <textarea style="display:none;">[TOC]
-
-#### Disabled options
-
-- TeX (Based on KaTeX);
-- Emoji;
-- Task lists;
-- HTML tags decode;
-- Flowchart and Sequence Diagram;
-
-#### Editor.md directory
-
-    editor.md/
-            lib/
-            css/
-            scss/
-            tests/
-            fonts/
-            images/
-            plugins/
-            examples/
-            languages/
-            editormd.js
-            ...
-
-```html
-&lt;!-- English --&gt;
-&lt;script src="../dist/js/languages/en.js"&gt;&lt;/script&gt;
-
-&lt;!-- 繁體中文 --&gt;
-&lt;script src="../dist/js/languages/zh-tw.js"&gt;&lt;/script&gt;
-```
-</textarea>
+        <textarea id="markdown" style="display: none"><%=markdown%></textarea>
     </div>
 </div>
 <input type="button" onclick="submitMarkdown()" value="Submit">
@@ -109,6 +93,7 @@
          });
          */
     });
+
 </script>
 </body>
 </html>
