@@ -13,10 +13,10 @@
         function login() {
             var username = $('#username').val();
             var password = $('#password').val();
-            if(username === null || username === '') {
+            if (username === null || username === '') {
                 alert("用户名不能为空");
                 return;
-            } else if(password === null || password === '') {
+            } else if (password === null || password === '') {
                 alert("密码不能为空");
                 return;
             }
@@ -28,8 +28,8 @@
                 },
                 function (data) {
                     var result = JSON.parse(data);
-                    if(result.code === 0) {
-                        window.location.href="login.form";
+                    if (result.code === 0) {
+                        window.location.href = "login.form";
                     } else {
                         alert(result.msg);
                     }
