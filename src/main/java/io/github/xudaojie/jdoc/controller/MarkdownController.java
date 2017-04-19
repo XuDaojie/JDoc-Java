@@ -56,9 +56,11 @@ public class MarkdownController {
         if (mMarkdownDAO.insert(markdownModel) > 0) {
             responseBody.setCode(0);
             responseBody.setData(markdownModel);
+            responseBody.setMsg("保存成功");
         } else {
             responseBody.setCode(102);
             responseBody.setData(markdownModel);
+            responseBody.setMsg("保存失败");
         }
         return JsonUtils.toJSONString(responseBody);
     }

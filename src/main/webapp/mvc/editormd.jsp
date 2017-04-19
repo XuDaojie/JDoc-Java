@@ -64,13 +64,12 @@
                     name: mdName,
                     markdown: mdContent
                 },
-                function (data, status) {
-                    var result = JSON.parse(data);
+                function (result, status) {
                     alert(result.msg);
                     // 新建页面保存成功后变为编辑
                     if(result.code === 0 && formAction !== 'save_markdown.do') {
                         formAction = 'save_markdown.do';
-                        markdownId = result.id;
+                        markdownId = result.data.id;
                     }
                 });
         }
