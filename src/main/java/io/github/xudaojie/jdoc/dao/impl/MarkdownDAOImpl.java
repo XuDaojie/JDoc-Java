@@ -21,6 +21,11 @@ public class MarkdownDAOImpl extends BaseDAO<MarkdownModel> implements MarkdownD
     }
 
     @Override
+    public List<MarkdownModel> getListByProject(long projectId) {
+        return super.selectList("getListByProject", projectId);
+    }
+
+    @Override
     public int update(MarkdownModel markdownModel) {
         return super.update(markdownModel);
     }

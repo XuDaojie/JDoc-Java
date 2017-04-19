@@ -1,3 +1,7 @@
+<%@ page import="java.util.List" %>
+<%@ page import="io.github.xudaojie.jdoc.model.ModuleModel" %>
+<%@ page import="io.github.xudaojie.jdoc.model.MarkdownModel" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: xdj
@@ -11,7 +15,20 @@
     <title>${project_name}</title>
 </head>
 <body>
+<%
+    List<ModuleModel> modelList = (List<ModuleModel>) request.getAttribute("module_list");
+    List<MarkdownModel> markdownList = (List<MarkdownModel>) request.getAttribute("markdown_list");
+%>
 ${project_name}<br>
-<a href="create_markdown.form">新建页面</a>
+-------------------<br>
+<a href="create_markdown.form">新建页面</a><br>
+----------Module---------<br>
+<c:forEach var="item" items="<%=modelList%>">
+    <a href="editormd.form?id=${item.id}&project_id=${item.projectId}">${item.name}</a><br>
+</c:forEach>
+----------Markdown---------<br>
+<c:forEach var="item" items="<%=markdownList%>">
+    <a href="editormd.form?id=${item.id}&project_id=${item.projectId}">${item.name}</a><br>
+</c:forEach>
 </body>
 </html>

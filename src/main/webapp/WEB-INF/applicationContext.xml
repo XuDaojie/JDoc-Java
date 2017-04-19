@@ -26,6 +26,7 @@
     </bean>
     <bean class="io.github.xudaojie.jdoc.dao.impl.AccountDAOImpl" id="accountDAO" parent="baseDAO"/>
     <bean class="io.github.xudaojie.jdoc.dao.impl.ProjectDAOImpl" id="projectDAO" parent="baseDAO"/>
+    <bean class="io.github.xudaojie.jdoc.dao.impl.ModuleDAOImpl" id="moduleDAO" parent="baseDAO"/>
     <bean class="io.github.xudaojie.jdoc.dao.impl.MarkdownDAOImpl" id="markdownDAO" parent="baseDAO"/>
     <!-- DAO end -->
 </beans>

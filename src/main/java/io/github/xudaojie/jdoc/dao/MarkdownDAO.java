@@ -12,6 +12,8 @@ public interface MarkdownDAO {
 
     List<MarkdownModel> getListByOwner(long ownerId);
 
+    List<MarkdownModel> getListByProject(long projectId);
+
     int update(MarkdownModel markdownModel);
 
     int insert(MarkdownModel markdownModel);
