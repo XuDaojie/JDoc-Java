@@ -5,15 +5,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 import io.github.xudaojie.jdoc.dao.MarkdownDAO;
 import io.github.xudaojie.jdoc.dao.ModuleDAO;
 import io.github.xudaojie.jdoc.dao.ProjectDAO;
+import io.github.xudaojie.jdoc.model.BaseResponseBody;
 import io.github.xudaojie.jdoc.model.MarkdownModel;
 import io.github.xudaojie.jdoc.model.ModuleModel;
 import io.github.xudaojie.jdoc.model.ProjectModel;
+import io.github.xudaojie.jdoc.util.JsonUtils;
 
 /**
  * Created by xdj on 2017/4/18.
@@ -58,6 +61,30 @@ public class ProjectController {
         return "error";
     }
 
+    @RequestMapping(value = "create_project.do", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String createProjectDo(@RequestParam(value = "name") String name,
+                                @RequestParam(value = "description", required = false) String description,
+                                @RequestParam(value = "password", required = false) String password) {
+        ProjectModel projectModel = new ProjectModel();
+        projectModel.setName(name);
+        projectModel.setDescription(description);
+        projectModel.setPassword(password);
+        projectModel.setOwner(1L);
+        projectModel.setCreator(1L);
+
+        BaseResponseBody responseBody = new BaseResponseBody();
+        if(mProjectDAO.insert(projectModel) > 0) {
+            responseBody.setCode(0);
+            responseBody.setData(projectModel);
+        } else {
+            responseBody.setCode(102);
+            responseBody.setMsg("保存失败");
+        }
+
+        return JsonUtils.toJSONString(responseBody);
+    }
+
     @RequestMapping("project.form")
     public String project(Model model) {
         List<ProjectModel> projectModels = mProjectDAO.getListByOwner(1L);
@@ -84,6 +111,13 @@ public class ProjectController {
             return "project_main";
         }
         return "error";
+    }
+
+    @RequestMapping(value = "project_list.do", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String projectList(@RequestParam("user_id") Long userId) {
+        List<ProjectModel> projectModels = mProjectDAO.getListByOwner(userId);
+        return JsonUtils.toJSONString(projectModels);
     }
 
 }

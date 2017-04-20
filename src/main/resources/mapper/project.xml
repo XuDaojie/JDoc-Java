@@ -12,7 +12,7 @@
     <update id="update">
         update project set owner = #{owner}, creator = #{creator} where id = #{id}
     </update>
-    <insert id="insert">
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="io.github.xudaojie.jdoc.model.ProjectModel">
         insert into project(name, owner, creator) values (#{name}, #{owner}, #{creator})
     </insert>
 </mapper>
