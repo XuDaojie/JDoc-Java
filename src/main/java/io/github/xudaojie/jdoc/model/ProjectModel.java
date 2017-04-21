@@ -2,6 +2,7 @@ package io.github.xudaojie.jdoc.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * ProjectDO
@@ -51,6 +52,8 @@ public class ProjectModel implements Serializable{
      * password
      */
     private String password;
+
+    private List<MarkdownModel> markdownList;
 
     /**
      * id getter & setter
@@ -140,5 +143,13 @@ public class ProjectModel implements Serializable{
     }
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public List<MarkdownModel> getMarkdownList() {
+        return markdownList;
+    }
+
+    public void setMarkdownList(List<MarkdownModel> markdownList) {
+        this.markdownList = markdownList;
     }
 }

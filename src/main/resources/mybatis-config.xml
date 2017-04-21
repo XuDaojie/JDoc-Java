@@ -30,10 +30,18 @@
         <!--</environment>-->
     <!--</environments>-->
 
+    <typeAliases>
+        <typeAlias type="io.github.xudaojie.jdoc.model.AccountModel" alias="Account"/>
+        <typeAlias type="io.github.xudaojie.jdoc.model.ProjectModel" alias="Project"/>
+        <typeAlias type="io.github.xudaojie.jdoc.model.MarkdownModel" alias="Markdown"/>
+        <typeAlias type="io.github.xudaojie.jdoc.model.ModuleModel" alias="Module"/>
+    </typeAliases>
+
     <mappers>
         <mapper resource="mapper/account.xml"/>
         <mapper resource="mapper/project.xml"/>
         <mapper resource="mapper/markdown.xml"/>
         <mapper resource="mapper/module.xml"/>
     </mappers>
+
 </configuration>

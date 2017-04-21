@@ -3,16 +3,68 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.github.xudaojie.jdoc.model.ProjectModel">
+    <resultMap id="projectResult" type="Project">
+        <id property="id" column="project_id" javaType="long"/>
+        <result property="name" column="project_name"/>
+        <result property="description" column="project_description"/>
+        <result property="password" column="project_password"/>
+        <result property="creator" column="project_creator"/>
+        <result property="owner" column="project_owner"/>
+        <result property="createDate" column="project_create_date"/>
+        <result property="updateDate" column="project_update_date"/>
+
+        <collection property="markdownList" ofType="Markdown">
+            <id property="id" column="markdown_id" javaType="long"/>
+            <result property="name" column="markdown_name"/>
+            <result property="creator" column="markdown_creator"/>
+            <result property="handler" column="markdown_handler"/>
+            <result property="createDate" column="markdown_create_date"/>
+            <result property="updateDate" column="markdown_update_date"/>
+        </collection>
+    </resultMap>
+
     <select id="get" parameterType="long" resultType="io.github.xudaojie.jdoc.model.ProjectModel">
-        select * from project where id = #{id}
+        SELECT *
+        FROM project
+        WHERE id = #{id}
     </select>
-    <select id="getListByOwner" resultType="io.github.xudaojie.jdoc.model.ProjectModel">
-        select * from project where owner = #{owner}
+    <select id="getListByOwner" resultMap="projectResult">
+        SELECT
+            project.id           AS project_id,
+            project.NAME         AS project_name,
+            project.description  AS project_description,
+            project.PASSWORD     AS project_password,
+            project.creator      AS project_creator,
+            project.OWNER        AS project_owner,
+            project.create_date  AS project_create_date,
+            project.update_date  AS project_update_date,
+            markdown.id          AS markdown_id,
+            markdown.NAME        AS markdown_name,
+            markdown.creator     AS markdown_creator,
+            markdown.HANDLER     AS markdown_handler,
+            markdown.create_date AS markdown_create_date,
+            markdown.update_date AS markdown_update_date
+        FROM
+            project
+            LEFT JOIN markdown ON project.id = markdown.project_id
+        WHERE
+            project.OWNER = #{owner}
+            AND project.is_delete = 0
+            AND (
+                (
+                    !(markdown.id IS NULL)
+                    AND markdown.is_delete = 0
+                )
+                OR (markdown.id IS NULL)
+            )
     </select>
     <update id="update">
-        update project set owner = #{owner}, creator = #{creator} where id = #{id}
+        UPDATE project
+        SET owner = #{owner}, creator = #{creator}
+        WHERE id = #{id}
     </update>
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="io.github.xudaojie.jdoc.model.ProjectModel">
-        insert into project(name, owner, creator) values (#{name}, #{owner}, #{creator})
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true"
+        parameterType="io.github.xudaojie.jdoc.model.ProjectModel">
+        INSERT INTO project (name, owner, creator) VALUES (#{name}, #{owner}, #{creator})
     </insert>
 </mapper>

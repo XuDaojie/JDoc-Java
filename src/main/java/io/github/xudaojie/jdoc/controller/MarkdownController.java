@@ -73,6 +73,21 @@ public class MarkdownController {
         return "editormd";
     }
 
+    @RequestMapping(value = "markdown.do", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String markdown(@RequestParam("id") long id) {
+        MarkdownModel markdownModel = mMarkdownDAO.get(id);
+        BaseResponseBody responseBody = new BaseResponseBody();
+        if (markdownModel != null) {
+            responseBody.setCode(0);
+            responseBody.setData(markdownModel);
+        } else {
+            responseBody.setCode(102);
+            responseBody.setMsg("内容不存在");
+        }
+        return JsonUtils.toJSONString(responseBody);
+    }
+
     @RequestMapping(value = "save_markdown.do", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String saveMarkdown(

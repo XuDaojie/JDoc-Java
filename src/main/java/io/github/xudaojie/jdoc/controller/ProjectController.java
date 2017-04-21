@@ -117,7 +117,10 @@ public class ProjectController {
     @ResponseBody
     public String projectList(@RequestParam("user_id") Long userId) {
         List<ProjectModel> projectModels = mProjectDAO.getListByOwner(userId);
-        return JsonUtils.toJSONString(projectModels);
+        BaseResponseBody responseBody = new BaseResponseBody();
+        responseBody.setCode(0);
+        responseBody.setData(projectModels);
+        return JsonUtils.toJSONString(responseBody);
     }
 
 }
