@@ -123,4 +123,19 @@ public class MarkdownController {
 
         return JsonUtils.toJSONString(responseBody);
     }
+
+    @RequestMapping(value = "delete_markdown.do", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String delete(@RequestParam("id")long id) {
+        BaseResponseBody responseBody = new BaseResponseBody();
+        int rowCount = mMarkdownDAO.delete(id);
+        if (rowCount > 0) {
+            responseBody.setCode(0);
+        }else {
+            responseBody.setCode(102);
+            responseBody.setMsg("删除失败");
+        }
+
+        return JsonUtils.toJSONString(responseBody);
+    }
 }

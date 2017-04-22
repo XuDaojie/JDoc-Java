@@ -35,7 +35,6 @@ public class MarkdownDAOImpl extends BaseDAO<MarkdownModel> implements MarkdownD
         return super.insert(markdownModel);
     }
 
-
     @Override
     public int delete(long id) {
         return super.delete(id);

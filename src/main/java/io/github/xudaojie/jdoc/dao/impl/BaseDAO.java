@@ -64,7 +64,14 @@ public class BaseDAO<T> {
         return update("update", param);
     }
 
-    protected int delete(String statement, Object param) {
+    /**
+     * delete 是通过update is_delete字段实现
+     * remove 是真正调用delete
+     * @param statement
+     * @param param
+     * @return
+     */
+    protected int remove(String statement, Object param) {
         SqlSession sqlSession = mSqlSessionFactory.openSession();
         int rowCount = sqlSession.delete(format(statement), param);
         sqlSession.commit();
@@ -73,8 +80,16 @@ public class BaseDAO<T> {
         return rowCount;
     }
 
+    protected int remove(Object param) {
+        return delete("delete", param);
+    }
+
+    protected int delete(String statement, Object param) {
+        return update(statement, param);
+    }
+
     protected int delete(Object param) {
-        return update("delete", param);
+        return remove("remove", param);
     }
 
     protected int insert(String statement, Object param) {

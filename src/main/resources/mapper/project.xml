@@ -20,6 +20,7 @@
             <result property="handler" column="markdown_handler"/>
             <result property="createDate" column="markdown_create_date"/>
             <result property="updateDate" column="markdown_update_date"/>
+            <result property="description" column="markdown_description"/>
         </collection>
     </resultMap>
 
@@ -43,7 +44,8 @@
             markdown.creator     AS markdown_creator,
             markdown.HANDLER     AS markdown_handler,
             markdown.create_date AS markdown_create_date,
-            markdown.update_date AS markdown_update_date
+            markdown.update_date AS markdown_update_date,
+            markdown.description AS markdown_description
         FROM
             project
             LEFT JOIN markdown ON project.id = markdown.project_id

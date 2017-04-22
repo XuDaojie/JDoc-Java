@@ -52,6 +52,7 @@ public class MarkdownModel implements Serializable{
     private Long moduleId;
 
     private String name;
+    private String description;
 
     public String getName() {
         return name;
@@ -151,4 +152,11 @@ public class MarkdownModel implements Serializable{
         this.moduleId = moduleId;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

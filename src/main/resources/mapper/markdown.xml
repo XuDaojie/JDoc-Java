@@ -24,8 +24,14 @@
             content    = #{content}, handler = #{handler}
         WHERE id = #{id}
     </update>
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="io.github.xudaojie.jdoc.model.MarkdownModel">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+        parameterType="io.github.xudaojie.jdoc.model.MarkdownModel">
         INSERT INTO markdown (project_id, module_id, name, content, creator, handler)
         VALUES (#{projectId}, #{moduleId}, #{name}, #{content}, #{creator}, #{handler})
     </insert>
+    <update id="delete">
+        UPDATE markdown
+        SET is_delete = 1
+        WHERE id = #{id}
+    </update>
 </mapper>

@@ -1,11 +1,17 @@
 package io.github.xudaojie.jdoc.controller;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -17,11 +23,13 @@ import io.github.xudaojie.jdoc.model.MarkdownModel;
 import io.github.xudaojie.jdoc.model.ModuleModel;
 import io.github.xudaojie.jdoc.model.ProjectModel;
 import io.github.xudaojie.jdoc.util.JsonUtils;
+import io.github.xudaojie.jdoc.util.TokenUtils;
 
 /**
  * Created by xdj on 2017/4/18.
  */
 @Controller
+@RestController
 public class ProjectController {
 
     @Autowired
@@ -51,10 +59,11 @@ public class ProjectController {
         projectModel.setName(name);
         projectModel.setDescription(description);
         projectModel.setPassword(password);
+        // todo user=1
         projectModel.setOwner(1L);
         projectModel.setCreator(1L);
 
-        if(mProjectDAO.insert(projectModel) > 0) {
+        if (mProjectDAO.insert(projectModel) > 0) {
             return "redirect:/project.form";
         }
 
@@ -64,17 +73,18 @@ public class ProjectController {
     @RequestMapping(value = "create_project.do", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String createProjectDo(@RequestParam(value = "name") String name,
-                                @RequestParam(value = "description", required = false) String description,
-                                @RequestParam(value = "password", required = false) String password) {
+                                  @RequestParam(value = "description", required = false) String description,
+                                  @RequestParam(value = "password", required = false) String password) {
         ProjectModel projectModel = new ProjectModel();
         projectModel.setName(name);
         projectModel.setDescription(description);
         projectModel.setPassword(password);
+        // todo user=1
         projectModel.setOwner(1L);
         projectModel.setCreator(1L);
 
         BaseResponseBody responseBody = new BaseResponseBody();
-        if(mProjectDAO.insert(projectModel) > 0) {
+        if (mProjectDAO.insert(projectModel) > 0) {
             responseBody.setCode(0);
             responseBody.setData(projectModel);
         } else {
@@ -87,10 +97,11 @@ public class ProjectController {
 
     @RequestMapping("project.form")
     public String project(Model model) {
+        // todo project_id=1
         List<ProjectModel> projectModels = mProjectDAO.getListByOwner(1L);
         String projectNames = "";
-        for (ProjectModel projectModel:
-             projectModels) {
+        for (ProjectModel projectModel :
+                projectModels) {
             projectNames += projectModel.getName() + "， ";
         }
         model.addAttribute("project_names", projectNames);
@@ -116,6 +127,109 @@ public class ProjectController {
     @RequestMapping(value = "project_list.do", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String projectList(@RequestParam("user_id") Long userId) {
+        List<ProjectModel> projectModels = mProjectDAO.getListByOwner(userId);
+        BaseResponseBody responseBody = new BaseResponseBody();
+        responseBody.setCode(0);
+        responseBody.setData(projectModels);
+        return JsonUtils.toJSONString(responseBody);
+    }
+
+    @RequestMapping(value = "delete_project.do", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String delete(@RequestParam("id") long id) {
+        BaseResponseBody responseBody = new BaseResponseBody();
+        int rowCount = mMarkdownDAO.delete(id);
+        if (rowCount > 0) {
+            responseBody.setCode(0);
+        } else {
+            responseBody.setCode(102);
+            responseBody.setMsg("删除失败");
+        }
+        return JsonUtils.toJSONString(responseBody);
+    }
+
+    // rest--------
+    @RequestMapping(method = RequestMethod.POST, value = "/project/", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String projectPost(@RequestParam(value = "name") String name,
+                              @RequestParam(value = "description", required = false) String description,
+                              @RequestParam(value = "password", required = false) String password) {
+        ProjectModel projectModel = new ProjectModel();
+        projectModel.setName(name);
+        projectModel.setDescription(description);
+        projectModel.setPassword(password);
+        // todo user=1
+        projectModel.setOwner(1L);
+        projectModel.setCreator(1L);
+
+        BaseResponseBody responseBody = new BaseResponseBody();
+        if (mProjectDAO.insert(projectModel) > 0) {
+            responseBody.setCode(0);
+            responseBody.setData(projectModel);
+        } else {
+            responseBody.setCode(102);
+            responseBody.setMsg("保存失败");
+        }
+
+        return JsonUtils.toJSONString(responseBody);
+    }
+
+    @RequestMapping(value = "/project/{id}", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String projectDelete(@PathVariable("id") long id) {
+        BaseResponseBody responseBody = new BaseResponseBody();
+        int rowCount = mMarkdownDAO.delete(id);
+        if (rowCount > 0) {
+            responseBody.setCode(0);
+        } else {
+            responseBody.setCode(102);
+            responseBody.setMsg("删除失败");
+        }
+        return JsonUtils.toJSONString(responseBody);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/project/{id}", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String projectPut(@PathVariable("id") long id,
+                             @RequestParam(value = "name") String name,
+                             @RequestParam(value = "description", required = false) String description,
+                             @RequestParam(value = "password", required = false) String password) {
+        ProjectModel projectModel = new ProjectModel();
+        projectModel.setId(id);
+        projectModel.setName(name);
+        projectModel.setDescription(description);
+        projectModel.setPassword(password);
+//        projectModel.setOwner(id);
+//        projectModel.setCreator(id);
+
+        BaseResponseBody responseBody = new BaseResponseBody();
+        if (mProjectDAO.update(projectModel) > 0) {
+            responseBody.setCode(0);
+            responseBody.setData(projectModel);
+        } else {
+            responseBody.setCode(102);
+            responseBody.setMsg("保存失败");
+        }
+
+        return JsonUtils.toJSONString(responseBody);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "project", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String projectListGet(@RequestHeader("X-Access-Token") String token) {
+        DecodedJWT jwt = TokenUtils.verify(token);
+        Long userId = jwt.getClaim("user_id").as(Long.class);
+
+//        try {
+//            Algorithm algorithm = Algorithm.HMAC256("mystar");
+//            String token = JWT.create()
+//                    .withIssuer("John Wu JWT")
+//                    .sign(algorithm);
+//        } catch (UnsupportedEncodingException exception){
+//            //UTF-8 encoding not supported
+//        } catch (JWTCreationException exception){
+//            //Invalid Signing configuration / Couldn't convert Claims.
+//        }
         List<ProjectModel> projectModels = mProjectDAO.getListByOwner(userId);
         BaseResponseBody responseBody = new BaseResponseBody();
         responseBody.setCode(0);
