@@ -12,7 +12,7 @@
     <update id="update">
         update account set nickname = #{nickname} where id = #{id}
     </update>
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into account(username, password) values (#{username}, #{password})
     </insert>
 </mapper>

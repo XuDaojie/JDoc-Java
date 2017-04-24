@@ -3,6 +3,7 @@ package io.github.xudaojie.jdoc.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -22,7 +23,7 @@ public class TokenUtils {
                     .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(token);
             return jwt;
-        } catch (UnsupportedEncodingException exception){
+        } catch (UnsupportedEncodingException exception) {
             //UTF-8 encoding not supported
         }
 //        catch (JWTVerificationException exception){
@@ -50,11 +51,32 @@ public class TokenUtils {
                     .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(token);
             return jwt;
-        } catch (UnsupportedEncodingException exception){
+        } catch (UnsupportedEncodingException exception) {
             //UTF-8 encoding not supported
         }
         return null;
     }
 
+    public static String create() throws JWTCreationException {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(SECRET);
+            return JWT.create()
+                    .sign(algorithm);
+        } catch (UnsupportedEncodingException exception) {
+            //UTF-8 encoding not supported
+        }
+        return null;
+    }
 
+    public static String create(String withIssuer) throws JWTCreationException {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(SECRET);
+            return JWT.create()
+                    .withIssuer(withIssuer)
+                    .sign(algorithm);
+        } catch (UnsupportedEncodingException exception) {
+            //UTF-8 encoding not supported
+        }
+        return null;
+    }
 }

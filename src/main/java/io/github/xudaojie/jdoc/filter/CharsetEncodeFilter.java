@@ -27,6 +27,7 @@ public class CharsetEncodeFilter implements Filter {
         if (response instanceof HttpServletResponse) {
             // ReactJS通过Ajax请求时出错
             // http://zjblogs.com/js/Access-Control-Allow-Origin.html
+            // http://stackoverflow.com/questions/25727306/request-header-field-access-control-allow-headers-is-not-allowed-by-access-contr
             ((HttpServletResponse) response).setHeader("Access-Control-Allow-Origin", "*");
             ((HttpServletResponse) response).setHeader("Access-Control-Allow-Headers", "X-Access-Token");
         }
