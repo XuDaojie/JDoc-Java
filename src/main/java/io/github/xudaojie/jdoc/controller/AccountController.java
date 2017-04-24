@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -70,12 +71,10 @@ public class AccountController {
         return JsonUtils.toJSONString(responseBody);
     }
 
-    @RequestMapping(value = "account", produces = "application/json;charset=UTF-8")
-    @ResponseBody
     public String dispose(@RequestHeader("X-Access-Token") String token) {
         BaseResponseBody responseBody = null;
         DecodedJWT decodedJWT = TokenUtils.decode(token);
-        if (decodedJWT == null || decodedJWT.getHeaderClaim("action") == null) {
+        if (decodedJWT == null) {
             responseBody = new BaseResponseBody();
             responseBody.setCode(401);
             responseBody.setData("token已失效");
@@ -116,32 +115,11 @@ public class AccountController {
             }
         }
 
-        String username = null;
-        String password = null;
-        if (decodedJWT != null) {
-            username = decodedJWT.getClaim("username").asString();
-        }
-        if (decodedJWT != null) {
-            password = decodedJWT.getClaim("password").asString();
-        }
-
-        AccountModel accountModel = mAccountDAO.getByName(username);
-        if (accountModel == null) {
-            responseBody.setCode(1);
-            responseBody.setMsg("账号不存在");
-        } else if (TextUtils.equals(password, accountModel.getPassword())) {
-            accountModel.setPassword(null);
-
-            responseBody.setCode(0);
-            responseBody.setData(accountModel);
-        } else {
-            responseBody.setCode(2);
-            responseBody.setMsg("用户名或密码错误");
-        }
-
         return JsonUtils.toJSONString(responseBody);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "login.do", produces = "application/json;charset=UTF-8")
+    @ResponseBody
     public BaseResponseBody login(AccountModel accountModel) {
         BaseResponseBody responseBody = new BaseResponseBody();
         AccountModel selectAccountModel = mAccountDAO.getByName(accountModel.getUsername());
@@ -160,6 +138,8 @@ public class AccountController {
         return responseBody;
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "login.do", produces = "application/json;charset=UTF-8")
+    @ResponseBody
     public BaseResponseBody register(AccountModel accountModel) {
         BaseResponseBody responseBody = new BaseResponseBody();
 
@@ -181,6 +161,8 @@ public class AccountController {
         return responseBody;
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "login.do", produces = "application/json;charset=UTF-8")
+    @ResponseBody
     public BaseResponseBody update(AccountModel accountModel) {
         BaseResponseBody responseBody = new BaseResponseBody();
 
