@@ -10,6 +10,8 @@ import io.github.xudaojie.jdoc.model.ProjectModel;
 public interface ProjectDAO {
     ProjectModel get(long id);
 
+    ProjectModel getByName(String name);
+
     List<ProjectModel> getListByOwner(long id);
 
     int update(ProjectModel projectModel);

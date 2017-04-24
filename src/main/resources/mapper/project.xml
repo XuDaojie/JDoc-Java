@@ -29,6 +29,11 @@
         FROM project
         WHERE id = #{id}
     </select>
+    <select id="getListByName" resultType="Project">
+        SELECT *
+        FROM markdown
+        WHERE name = #{name}
+    </select>
     <select id="getListByOwner" resultMap="projectResult">
         SELECT
             project.id           AS project_id,
