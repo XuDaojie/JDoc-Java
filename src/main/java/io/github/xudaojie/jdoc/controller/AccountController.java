@@ -158,9 +158,9 @@ public class AccountController {
             responseBody.setMsg("用户名或密码错误");
         }
         return responseBody;
-    };
+    }
 
-    public BaseResponseBody register(AccountModel accountModel) {
+    private BaseResponseBody register(AccountModel accountModel) {
         BaseResponseBody responseBody = new BaseResponseBody();
 
         if (TextUtils.isEmpty(accountModel.getPassword())) {
@@ -181,7 +181,7 @@ public class AccountController {
         return responseBody;
     }
 
-    public BaseResponseBody update(AccountModel accountModel) {
+    private BaseResponseBody update(AccountModel accountModel) {
         BaseResponseBody responseBody = new BaseResponseBody();
 
         AccountModel selectAccountModel = mAccountDAO.getByName(accountModel.getUsername());
