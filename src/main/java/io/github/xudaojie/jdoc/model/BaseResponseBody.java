@@ -18,7 +18,7 @@ public class BaseResponseBody implements Serializable {
      * code = 3 系统已屏蔽此账号
      * code = 4 密码错误次数超过了最大的重试次数
      * code = 11 用户已存在
-     * code = 12 密码不能为空
+     * code = 12 用户名\密码不能为空
      * code = 401 token失效
      * code = 102 请求错误
      */
