@@ -142,7 +142,7 @@ public class AccountController {
         return JsonUtils.toJSONString(responseBody);
     }
 
-    private BaseResponseBody login(AccountModel accountModel) {
+    public BaseResponseBody login(AccountModel accountModel) {
         BaseResponseBody responseBody = new BaseResponseBody();
         AccountModel selectAccountModel = mAccountDAO.getByName(accountModel.getUsername());
         if (selectAccountModel == null) {
@@ -160,7 +160,7 @@ public class AccountController {
         return responseBody;
     }
 
-    private BaseResponseBody register(AccountModel accountModel) {
+    public BaseResponseBody register(AccountModel accountModel) {
         BaseResponseBody responseBody = new BaseResponseBody();
 
         if (TextUtils.isEmpty(accountModel.getPassword())) {
@@ -181,7 +181,7 @@ public class AccountController {
         return responseBody;
     }
 
-    private BaseResponseBody update(AccountModel accountModel) {
+    public BaseResponseBody update(AccountModel accountModel) {
         BaseResponseBody responseBody = new BaseResponseBody();
 
         AccountModel selectAccountModel = mAccountDAO.getByName(accountModel.getUsername());
