@@ -31,7 +31,7 @@ public class MarkdownController {
     @Autowired
     private ProjectDAO mProjectDAO;
 
-    @RequestMapping(value = "markdown", produces = "application/json;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.POST, value = "markdown", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String insert(@RequestHeader("X-Access-Token") String token) {
         DecodedJWT decodedJWT = TokenUtils.decode(token);
@@ -79,7 +79,7 @@ public class MarkdownController {
         return JsonUtils.toJSONString(responseBody);
     }
 
-    @RequestMapping(value = "markdown", produces = "application/json;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.DELETE, value = "markdown", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String delete(@RequestHeader("X-Access-Token") String token) {
         DecodedJWT decodedJWT = TokenUtils.decode(token);

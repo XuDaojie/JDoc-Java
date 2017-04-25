@@ -19,7 +19,7 @@ import io.github.xudaojie.jdoc.util.TokenUtils;
 /**
  * Created by xdj on 2017/4/18.
  */
-@Controller("account")
+@Controller("/account")
 public class AccountController {
 
     @Autowired
