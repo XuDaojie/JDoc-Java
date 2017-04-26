@@ -18,10 +18,13 @@
         FROM markdown
         WHERE project_id = #{projectId}
     </select>
+    <!--#         project_id = #{projectId},-->
+    <!--#         module_id = #{moduleId},-->
+    <!--#         handler = #{handler}-->
+    <!--#         content = #{content},-->
     <update id="update">
         UPDATE markdown
-        SET project_id = #{projectId}, module_id = #{moduleId}, name = #{name},
-            content    = #{content}, handler = #{handler}
+        SET name = #{name}, content = #{content}
         WHERE id = #{id}
     </update>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"

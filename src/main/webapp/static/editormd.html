@@ -3,6 +3,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Simple example - Editor.md examples</title>
   <!--<link rel="stylesheet" href="lib/editor.md-v1.5.0/examples/css/style.css" />-->
+  <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="../lib/editor.md-v1.5.0/css/editormd.css"/>
   <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico"
         type="image/x-icon"/>
@@ -13,7 +14,7 @@
     function getUrlParam(key) {
       var vars = {};
       var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi,
-        function(m,key,value) {
+        function (m, key, value) {
           vars[key] = value;
         }
       );
@@ -21,12 +22,38 @@
     }
 
     function insertApiTempl() {
-      editor.insertValue("`Template`")
+      editor.insertValue($("#template_store").html());
     }
-    
+
     function save() {
       var it = getUrlParam("it");
+      var userId = getUrlParam("user_id");
+      var markdownId = getUrlParam("markdown_id");
+
+      $.ajax({
+        url: BASE_URL + "markdown",
+        type: "POST",
+        data: {
+          _method: 'PUT',
+          markdown_id: markdownId,
+          user_id: userId,
+          name: $("#md_name").val(),
+          content: editor.getMarkdown()
+        },
+        headers: {"X-Access-Token": it},
+        success: function (result, jqXHR) {
+          if (result.code === 0) {
+            alert("保存成功");
+          } else {
+            alert(result.msg);
+          }
+        },
+        error: function (jqXHR, status, errorThrown) {
+          alert("保存失败");
+        }
+      })
     }
+
   </script>
 </head>
 <body>
@@ -36,18 +63,18 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <div id="name" name="name" value="static"
-           class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <div class="mdl-textfield mdl-js-textfield">
         <input class="mdl-textfield__input" type="text" id="md_name">
-        <label class="mdl-textfield__label" for="md_name">文档名称</label>
+        <label class="mdl-textfield__label" for="md_name"></label>
       </div>
+
       <!-- Title -->
       <!--<span class="mdl-layout-title">Markdown</span>-->
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation. We hide it in small screens. -->
       <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <a class="mdl-navigation__link" href="">保存</a>
+        <!--<a class="mdl-navigation__link" href="">保存</a>-->
         <!--<a class="mdl-navigation__link" href="">Link</a>-->
         <!--<a class="mdl-navigation__link" href="">Link</a>-->
         <!--<a class="mdl-navigation__link" href="">Link</a>-->
@@ -55,13 +82,13 @@
     </div>
   </header>
   <!--<div class="mdl-layout__drawer">-->
-    <!--<span class="mdl-layout-title">Title</span>-->
-    <!--<nav class="mdl-navigation">-->
-      <!--<a class="mdl-navigation__link" href="">Link</a>-->
-      <!--<a class="mdl-navigation__link" href="">Link</a>-->
-      <!--<a class="mdl-navigation__link" href="">Link</a>-->
-      <!--<a class="mdl-navigation__link" href="">Link</a>-->
-    <!--</nav>-->
+  <!--<span class="mdl-layout-title">Title</span>-->
+  <!--<nav class="mdl-navigation">-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--</nav>-->
   <!--</div>-->
   <main class="mdl-layout__content">
     <div class="page-content" style="padding: 1%">
@@ -71,13 +98,8 @@
         插入接口模板
       </button>
       <button
-          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-          onclick="insertApiTempl()">
-        插入接口模板
-      </button>
-      <button
           class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
-          onclick="submitMarkdown()">
+          onclick="save()">
         保存
       </button>
       <div id="layout" style="margin-top: 1%">
@@ -91,9 +113,63 @@
   </main>
 </div>
 
+<!-- 存放模板 -->
+<div id="template_store" style="display: none">
+
+
+  **简要描述：**
+
+  - 用户注册接口
+
+  **请求URL：**
+  - ` http://xx.com/api/user/register `
+
+  **请求方式：**
+  - POST
+
+  **参数：**
+
+  |参数名|必选|类型|说明|
+  |:----    |:---|:----- |-----   |
+  |username |是  |string |用户名   |
+  |password |是  |string | 密码    |
+  |name     |否  |string | 昵称    |
+
+  **返回示例**
+
+  ```
+  {
+  "error_code": 0,
+  "data": {
+  "uid": "1",
+  "username": "12154545",
+  "name": "吴系挂",
+  "groupid": 2 ,
+  "reg_time": "1436864169",
+  "last_login_time": "0",
+  }
+  }
+  ```
+
+  **返回参数说明**
+
+  |参数名|类型|说明|
+  |:-----  |:-----|-----                           |
+  |groupid |int   |用户组id，1：超级管理员；2：普通用户  |
+
+  **备注**
+
+  - 更多返回错误代码请看首页的错误代码描述
+
+
+
+</div>
+
 <script src="../lib/editor.md-v1.5.0/examples/js/jquery.min.js"></script>
 <script src="../lib/editor.md-v1.5.0/editormd.min.js"></script>
 <script type="text/javascript">
+  var BASE_URL = "http://localhost:8080/JDoc/";
+  var mdData;
   var editor;
 
   $(function () {
@@ -101,7 +177,26 @@
       width: "100%",
       height: "82%",
       syncScrolling: "single",
-      path: "../lib/editor.md-v1.5.0/lib/"
+      path: "../lib/editor.md-v1.5.0/lib/",
+      onload: function () {
+        var markdownId = getUrlParam('markdown_id');
+        $.ajax({
+          url: "http://localhost:8080/JDoc/markdown/" + markdownId,
+          headers: {
+            headers: {"X-Access-Token": ''},
+          },
+          success: function (result, jqXHR) {
+            if (result.code === 0) {
+              mdData = result;
+              editor.insertValue(result.data.content);
+              $("#md_name").val(result.data.name);
+            }
+          },
+          error: function (jqXHR, status, errorThrown) {
+            alert("数据加载失败,请刷新");
+          }
+        })
+      },
     });
 
     /*
@@ -114,7 +209,6 @@
      });
      */
   });
-
 </script>
 </body>
 </html>

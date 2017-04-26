@@ -25,6 +25,7 @@ public class BaseResponseBody implements Serializable {
 
     private int code;
     private String msg;
+    private String token;
     private Object data;
 
     public int getCode() {
@@ -41,6 +42,14 @@ public class BaseResponseBody implements Serializable {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Object getData() {

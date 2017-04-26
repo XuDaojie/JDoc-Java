@@ -71,7 +71,7 @@ public class MarkdownController {
         map.put("name", projectName);
         map.put("owner", userId);
         ProjectModel projectModel = mProjectDAO.getByName(map);
-        if(projectModel == null) {
+        if (projectModel == null) {
             // 创建Markdown、Project
             projectModel = new ProjectModel();
             projectModel.setName(projectName);
@@ -99,15 +99,14 @@ public class MarkdownController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "markdown", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String delete(@RequestHeader("X-Access-Token") String token) {
-        DecodedJWT decodedJWT = TokenUtils.decode(token);
-        Long markdownId = decodedJWT.getClaim("id").as(Long.class);
-
+    public String delete(@RequestHeader("X-Access-Token") String token,
+                         @RequestParam("user_id") Long userId,
+                         @RequestParam("markdown_id") Long markdownId) {
         BaseResponseBody responseBody = new BaseResponseBody();
         int rowCount = mMarkdownDAO.delete(markdownId);
         if (rowCount > 0) {
             responseBody.setCode(0);
-        }else {
+        } else {
             responseBody.setCode(102);
             responseBody.setMsg("删除失败");
         }
@@ -117,14 +116,14 @@ public class MarkdownController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "markdown", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String put(@RequestHeader("X-Access-Token") String token) {
-        DecodedJWT decodedJWT = TokenUtils.decode(token);
-        Long markdownId = decodedJWT.getClaim("markdown_id").as(Long.class);
-        Long userId = decodedJWT.getClaim("user_id").as(Long.class);
-        Long projectId = decodedJWT.getClaim("project_id").as(Long.class);
-        String name = decodedJWT.getClaim("name").asString();
-        String content = decodedJWT.getClaim("content").asString();
-        String description = decodedJWT.getClaim("description").asString();
+    public String put(@RequestHeader("X-Access-Token") String token,
+                      @RequestParam("markdown_id") Long markdownId,
+                      @RequestParam("user_id") Long userId,
+                      @RequestParam(value = "project_id", required = false) Long projectId,
+                      @RequestParam(value = "project_name", required = false) Long projectName,
+                      @RequestParam("name") String name,
+                      @RequestParam("content") String content,
+                      @RequestParam(value = "description", required = false) String description) {
 
         MarkdownModel markdownModel = new MarkdownModel();
         markdownModel.setId(markdownId);
