@@ -16,7 +16,7 @@ public class ProjectDAOImpl extends BaseDAO<ProjectModel> implements ProjectDAO 
     }
 
     @Override
-    public ProjectModel getByName(String name) {
+    public ProjectModel getByName(Object name) {
         return selectOne("getByName", name);
     }
 

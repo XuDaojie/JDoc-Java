@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.github.xudaojie.jdoc.dao.MarkdownDAO;
 import io.github.xudaojie.jdoc.dao.ProjectDAO;
@@ -36,8 +38,8 @@ public class MarkdownController {
     public String insert(@RequestHeader("X-Access-Token") String token) {
         DecodedJWT decodedJWT = TokenUtils.decode(token);
         Long userId = decodedJWT.getClaim("user_id").as(Long.class);
-        Long projectId = decodedJWT.getClaim("project_id").as(Long.class);
-        String projectName = decodedJWT.getClaim("project_password").asString();
+//        Long projectId = decodedJWT.getClaim("project_id").as(Long.class);
+        String projectName = decodedJWT.getClaim("project_name").asString();
         String projectPwd = decodedJWT.getClaim("project_password").asString();
         String name = decodedJWT.getClaim("name").asString();
         String content = decodedJWT.getClaim("content").asString();
@@ -45,7 +47,7 @@ public class MarkdownController {
 //        String password = decodedJWT.getClaim("password").asString();
 
         MarkdownModel markdownModel = new MarkdownModel();
-        markdownModel.setProjectId(projectId);
+//        markdownModel.setProjectId(projectId);
 //        markdownModel.setModuleId(moduleId);
         markdownModel.setName(name);
         markdownModel.setContent(content);
@@ -55,13 +57,20 @@ public class MarkdownController {
         markdownModel.setCreator(userId);
 
         int rowNum;
-        if(mProjectDAO.getByName(projectName) == null) {
-            // 项目未创建则创建项目
-            ProjectModel projectModel = new ProjectModel();
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", projectName);
+        map.put("owner", userId);
+        ProjectModel projectModel = mProjectDAO.getByName(map);
+        if(projectModel == null) {
+            // 创建Markdown、Project
+            projectModel = new ProjectModel();
             projectModel.setName(projectName);
             projectModel.setPassword(projectPwd);
+            projectModel.setOwner(userId);
+            projectModel.setCreator(userId);
             rowNum = mMarkdownDAO.insert(markdownModel, projectModel);
         } else {
+            markdownModel.setProjectId(projectModel.getId());
             rowNum = mMarkdownDAO.insert(markdownModel);
         }
 
@@ -72,7 +81,6 @@ public class MarkdownController {
             responseBody.setMsg("保存成功");
         } else {
             responseBody.setCode(102);
-            responseBody.setData(markdownModel);
             responseBody.setMsg("保存失败");
         }
 
@@ -149,9 +157,9 @@ public class MarkdownController {
         return JsonUtils.toJSONString(responseBody);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "markdown", produces = "application/json;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.GET, value = "markdown/{id}", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String single(@PathVariable("id") long id) {
+    public String single(@PathVariable("id") Long id) {
         MarkdownModel markdownModel = mMarkdownDAO.get(id);
         BaseResponseBody responseBody = new BaseResponseBody();
         if (markdownModel != null) {

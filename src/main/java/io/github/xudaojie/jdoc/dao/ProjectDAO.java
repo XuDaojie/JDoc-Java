@@ -6,11 +6,12 @@ import io.github.xudaojie.jdoc.model.ProjectModel;
 
 /**
  * Created by xdj on 2017/4/18.
+ * 除了直接传入id的方法，其余全部都还需要传入userid
  */
 public interface ProjectDAO {
     ProjectModel get(long id);
 
-    ProjectModel getByName(String name);
+    ProjectModel getByName(Object object);
 
     List<ProjectModel> getListByOwner(long id);
 

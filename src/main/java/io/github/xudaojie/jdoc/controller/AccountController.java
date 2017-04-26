@@ -19,7 +19,7 @@ import io.github.xudaojie.jdoc.util.TokenUtils;
 /**
  * Created by xdj on 2017/4/18.
  */
-@Controller("/account")
+@Controller
 public class AccountController {
 
     @Autowired
@@ -33,7 +33,7 @@ public class AccountController {
         mAccountDAO = accountDAO;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.GET, value = "account", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String login(@RequestHeader("X-Access-Token") String token) {
         DecodedJWT decodedJWT = TokenUtils.decode(token);
@@ -57,7 +57,7 @@ public class AccountController {
         return JsonUtils.toJSONString(responseBody);
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.POST, value = "account", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String register(@RequestHeader("X-Access-Token") String token) {
         DecodedJWT decodedJWT = TokenUtils.decode(token);
@@ -91,7 +91,7 @@ public class AccountController {
         return JsonUtils.toJSONString(responseBody);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.PUT, value = "account", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public BaseResponseBody update(@RequestHeader("X-Access-Token") String token) {
         DecodedJWT decodedJWT = TokenUtils.decode(token);

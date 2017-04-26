@@ -11,6 +11,14 @@
         <filter-name>charsetEncodeFilter</filter-name>
         <url-pattern>*</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>headerFilter</filter-name>
+        <filter-class>io.github.xudaojie.jdoc.filter.HeaderFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>headerFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
 
     <!-- Spring MVC start-->
     <context-param>
@@ -38,16 +46,20 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.form</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.do</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/api/*</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>dispatcher</servlet-name>-->
+        <!--<url-pattern>*.form</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>dispatcher</servlet-name>-->
+        <!--<url-pattern>*.do</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>dispatcher</servlet-name>-->
+        <!--<url-pattern>/api/*</url-pattern>-->
+    <!--</servlet-mapping>-->
     <!-- Spring MVC end-->
 
     <error-page>

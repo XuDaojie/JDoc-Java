@@ -8,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by xdj on 2017/4/19.
@@ -23,14 +22,6 @@ public class CharsetEncodeFilter implements Filter {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8"); // 控制浏览器行为
         response.setCharacterEncoding("UTF-8"); // 控制输出流格式(getWriter())
-
-        if (response instanceof HttpServletResponse) {
-            // ReactJS通过Ajax请求时出错
-            // http://zjblogs.com/js/Access-Control-Allow-Origin.html
-            // http://stackoverflow.com/questions/25727306/request-header-field-access-control-allow-headers-is-not-allowed-by-access-contr
-            ((HttpServletResponse) response).setHeader("Access-Control-Allow-Origin", "*");
-            ((HttpServletResponse) response).setHeader("Access-Control-Allow-Headers", "X-Access-Token");
-        }
 
         chain.doFilter(request, response);
     }

@@ -29,10 +29,10 @@
         FROM project
         WHERE id = #{id}
     </select>
-    <select id="getListByName" resultType="Project">
+    <select id="getByName"  resultType="Project">
         SELECT *
-        FROM markdown
-        WHERE name = #{name}
+        FROM project
+        WHERE name = #{name} AND owner = #{owner}
     </select>
     <select id="getListByOwner" resultMap="projectResult">
         SELECT
