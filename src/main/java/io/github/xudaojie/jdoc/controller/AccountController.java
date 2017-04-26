@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Base64;
+
 import io.github.xudaojie.jdoc.dao.AccountDAO;
 import io.github.xudaojie.jdoc.model.AccountModel;
 import io.github.xudaojie.jdoc.model.BaseResponseBody;
@@ -35,10 +37,12 @@ public class AccountController {
 
     @RequestMapping(method = RequestMethod.GET, value = "account", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String login(@RequestHeader("X-Access-Token") String token) {
-        DecodedJWT decodedJWT = TokenUtils.decode(token);
-        String username = decodedJWT.getClaim("username").asString();
-        String password = decodedJWT.getClaim("password").asString();
+    public String login(@RequestHeader("Authorization") String auth) {
+//      Basic username:password
+        auth = auth.replace("Basic ", "");
+        auth = new String(Base64.getDecoder().decode(auth));
+        String username = auth.split(":")[0];
+        String password = auth.split(":")[1];
 
         BaseResponseBody responseBody = new BaseResponseBody();
         AccountModel accountModel = mAccountDAO.getByName(username);
@@ -47,6 +51,9 @@ public class AccountController {
             responseBody.setMsg("用户名不存在");
         } else if (TextUtils.equals(accountModel.getPassword(), password)) {
             accountModel.setPassword(null);
+            String token = TokenUtils.create("jdoc", accountModel.getUsername(), System.currentTimeMillis());
+            accountModel.setToken(token);
+            mAccountDAO.update(accountModel);
 
             responseBody.setCode(0);
             responseBody.setData(accountModel);

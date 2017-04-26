@@ -45,7 +45,7 @@ public class HeaderFilter implements Filter {
             // http://zjblogs.com/js/Access-Control-Allow-Origin.html
             // http://stackoverflow.com/questions/25727306/request-header-field-access-control-allow-headers-is-not-allowed-by-access-contr
             httpResponse.setHeader("Access-Control-Allow-Origin", "*");
-            httpResponse.setHeader("Access-Control-Allow-Headers", "X-Access-Token");
+            httpResponse.setHeader("Access-Control-Allow-Headers", "X-Access-Token,Authorization");
 
         }
 

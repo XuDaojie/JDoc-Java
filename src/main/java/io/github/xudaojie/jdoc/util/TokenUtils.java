@@ -68,7 +68,7 @@ public class TokenUtils {
         return null;
     }
 
-    public static String create(String withIssuer) throws JWTCreationException {
+    public static String create(String withIssuer, String withAud, Long iat) throws JWTCreationException {
         try {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
             return JWT.create()

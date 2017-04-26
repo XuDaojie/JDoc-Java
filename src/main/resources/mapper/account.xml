@@ -4,15 +4,22 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.github.xudaojie.jdoc.model.AccountModel">
     <select id="get" parameterType="int" resultType="io.github.xudaojie.jdoc.model.AccountModel">
-        select * from account where id = #{id}
+        SELECT *
+        FROM account
+        WHERE id = #{id}
     </select>
-    <select id="getByName" parameterType="string" resultType="io.github.xudaojie.jdoc.model.AccountModel">
-        select * from account where username = #{username}
+    <select id="getByName" parameterType="string"
+        resultType="io.github.xudaojie.jdoc.model.AccountModel">
+        SELECT *
+        FROM account
+        WHERE username = #{username}
     </select>
     <update id="update">
-        update account set nickname = #{nickname} where id = #{id}
+        UPDATE account
+        SET nickname = #{nickname}, token = #{token}
+        WHERE id = #{id}
     </update>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into account(username, password) values (#{username}, #{password})
+        INSERT INTO account (username, password) VALUES (#{username}, #{password})
     </insert>
 </mapper>

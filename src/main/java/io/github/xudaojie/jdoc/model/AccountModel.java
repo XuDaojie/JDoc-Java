@@ -43,6 +43,8 @@ public class AccountModel implements Serializable{
      */
     private Date updateDate;
 
+    private String token;
+
     /**
      * id getter & setter
      */
@@ -113,4 +115,11 @@ public class AccountModel implements Serializable{
         this.updateDate = updateDate;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }
