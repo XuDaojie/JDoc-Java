@@ -21,6 +21,11 @@ public class ProjectDAOImpl extends BaseDAO<ProjectModel> implements ProjectDAO 
     }
 
     @Override
+    public List<ProjectModel> getListByPublic() {
+        return selectList("getListByPublic", null);
+    }
+
+    @Override
     public List<ProjectModel> getListByOwner(long id) {
         return selectList("getListByOwner", id);
     }

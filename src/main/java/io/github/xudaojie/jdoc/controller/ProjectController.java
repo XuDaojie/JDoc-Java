@@ -123,6 +123,16 @@ public class ProjectController {
         return JsonUtils.toJSONString(responseBody);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "project", produces = "application/json;charset=UTF-8")
+    public String listPublic() {
+        BaseResponseBody responseBody = new BaseResponseBody();
+
+        List<ProjectModel> projectModelList = mProjectDAO.getListByPublic();
+        responseBody.setCode(0);
+        responseBody.setData(projectModelList);
+        return JsonUtils.toJSONString(responseBody);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "user/{user_id}/project", produces = "application/json;charset=UTF-8")
     public String list(@PathVariable("user_id") Long userId) {
         BaseResponseBody responseBody = new BaseResponseBody();

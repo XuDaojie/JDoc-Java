@@ -13,6 +13,8 @@ public interface ProjectDAO {
 
     ProjectModel getByName(Object object);
 
+    List<ProjectModel> getListByPublic();
+
     List<ProjectModel> getListByOwner(long id);
 
     int update(ProjectModel projectModel);
