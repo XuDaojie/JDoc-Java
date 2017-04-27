@@ -13,7 +13,7 @@
         <result property="createDate" column="project_create_date"/>
         <result property="updateDate" column="project_update_date"/>
 
-        <collection property="markdownList" ofType="Markdown">
+        <collection property="nestedItems" ofType="Markdown">
             <id property="id" column="markdown_id" javaType="long"/>
             <result property="name" column="markdown_name"/>
             <result property="creator" column="markdown_creator"/>
@@ -26,13 +26,14 @@
 
     <select id="get" parameterType="long" resultType="io.github.xudaojie.jdoc.model.ProjectModel">
         SELECT *
-        FROM project
+        FROM dir
         WHERE id = #{id}
     </select>
-    <select id="getByName"  resultType="Project">
+    <select id="getByName" resultType="Project">
         SELECT *
-        FROM project
+        FROM dir
         WHERE name = #{name} AND owner = #{owner}
+              and is_project = 1
     </select>
     <select id="getListByOwner" resultMap="projectResult">
         SELECT
@@ -52,10 +53,11 @@
             markdown.update_date AS markdown_update_date,
             markdown.description AS markdown_description
         FROM
-            project
-            LEFT JOIN markdown ON project.id = markdown.project_id
+            dir AS project
+            LEFT JOIN markdown ON project.id = markdown.dir_id
         WHERE
-            project.OWNER = #{owner}
+            project.is_project = 1
+            AND project.OWNER = #{owner}
             AND project.is_delete = 0
             AND (
                 (
@@ -66,12 +68,12 @@
             )
     </select>
     <update id="update">
-        UPDATE project
+        UPDATE dir
         SET owner = #{owner}, creator = #{creator}
         WHERE id = #{id}
     </update>
     <insert id="insert" keyProperty="id" useGeneratedKeys="true"
         parameterType="io.github.xudaojie.jdoc.model.ProjectModel">
-        INSERT INTO project (name, owner, creator) VALUES (#{name}, #{owner}, #{creator})
+        INSERT INTO dir (name, owner, creator, is_project) VALUES (#{name}, #{owner}, #{creator}, 1)
     </insert>
 </mapper>

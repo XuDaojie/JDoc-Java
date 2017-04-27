@@ -57,7 +57,7 @@ public class MarkdownController {
 //        String password = decodedJWT.getClaim("password").asString();
 
         MarkdownModel markdownModel = new MarkdownModel();
-//        markdownModel.setProjectId(projectId);
+//        markdownModel.setDirId(projectId);
 //        markdownModel.setModuleId(moduleId);
         markdownModel.setName(name);
         markdownModel.setContent(content);
@@ -80,7 +80,7 @@ public class MarkdownController {
             projectModel.setCreator(userId);
             rowNum = mMarkdownDAO.insert(markdownModel, projectModel);
         } else {
-            markdownModel.setProjectId(projectModel.getId());
+            markdownModel.setDirId(projectModel.getId());
             rowNum = mMarkdownDAO.insert(markdownModel);
         }
 
@@ -127,7 +127,7 @@ public class MarkdownController {
 
         MarkdownModel markdownModel = new MarkdownModel();
         markdownModel.setId(markdownId);
-        markdownModel.setProjectId(projectId);
+        markdownModel.setDirId(projectId);
 //        markdownModel.setModuleId(moduleId);
         markdownModel.setName(name);
         markdownModel.setContent(content);

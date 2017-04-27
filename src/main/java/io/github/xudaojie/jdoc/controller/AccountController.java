@@ -52,11 +52,9 @@ public class AccountController {
         } else if (TextUtils.equals(accountModel.getPassword(), password)) {
             accountModel.setPassword(null);
             String token = TokenUtils.create("jdoc", accountModel.getUsername(), System.currentTimeMillis());
-            accountModel.setToken(token);
-            mAccountDAO.update(accountModel);
-
             responseBody.setCode(0);
             responseBody.setData(accountModel);
+            responseBody.setToken(token);
         } else {
             responseBody.setCode(2);
             responseBody.setMsg("用户名或密码错误");

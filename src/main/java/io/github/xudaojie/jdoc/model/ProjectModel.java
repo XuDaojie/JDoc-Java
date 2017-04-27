@@ -13,7 +13,7 @@ import java.util.List;
  * Powered by duxing@Taobao
  */
 
-public class ProjectModel implements Serializable{
+public class ProjectModel extends FileModel implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
@@ -53,7 +53,9 @@ public class ProjectModel implements Serializable{
      */
     private String password;
 
-    private List<MarkdownModel> markdownList;
+    private boolean isProject;
+
+    private List<FileModel> nestedItems;
 
     /**
      * id getter & setter
@@ -145,11 +147,19 @@ public class ProjectModel implements Serializable{
         this.password = password;
     }
 
-    public List<MarkdownModel> getMarkdownList() {
-        return markdownList;
+    public List<FileModel> getNestedItems() {
+        return nestedItems;
     }
 
-    public void setMarkdownList(List<MarkdownModel> markdownList) {
-        this.markdownList = markdownList;
+    public void setNestedItems(List<FileModel> nestedItems) {
+        this.nestedItems = nestedItems;
+    }
+
+    public boolean isProject() {
+        return isProject;
+    }
+
+    public void setProject(boolean project) {
+        isProject = project;
     }
 }

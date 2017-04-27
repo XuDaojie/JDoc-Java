@@ -44,7 +44,7 @@ public class MarkdownDAOImpl extends BaseDAO<MarkdownModel> implements MarkdownD
         int rowCountP = sqlSession.insert(
                 ProjectModel.class.getName() + "." + "insert",
                 projectModel);
-        markdownModel.setProjectId(projectModel.getId());
+        markdownModel.setDirId(projectModel.getId());
         int rowCount = sqlSession.insert(
                 MarkdownModel.class.getName() + "." + "insert",
                 markdownModel);

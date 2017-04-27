@@ -17,7 +17,7 @@
 <body>
 <%
     List<ModuleModel> modelList = (List<ModuleModel>) request.getAttribute("module_list");
-    List<MarkdownModel> markdownList = (List<MarkdownModel>) request.getAttribute("markdown_list");
+    List<MarkdownModel> nestedItems = (List<MarkdownModel>) request.getAttribute("markdown_list");
 %>
 ${project_name}<br>
 -------------------<br>
@@ -27,7 +27,7 @@ ${project_name}<br>
     <a href="editormd.form?id=${item.id}">${item.name}</a><br>
 </c:forEach>
 ----------Markdown---------<br>
-<c:forEach var="item" items="<%=markdownList%>">
+<c:forEach var="item" items="<%=nestedItems%>">
     <a href="editormd.form?id=${item.id}">${item.name}</a><br>
 </c:forEach>
 </body>

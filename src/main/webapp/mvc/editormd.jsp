@@ -9,11 +9,11 @@
 <html lang="zh">
 <%
     String action = "save_markdown.do";
-    Long projectId = null;
+    Long dirId = null;
     Long moduleId = null;
     // todo 新增和编辑获取项目id方式待统一
     if (request.getParameter("project_id") != null) {
-        projectId = Long.parseLong(request.getParameter("project_id"));
+        dirId = Long.parseLong(request.getParameter("project_id"));
     }
     if (request.getParameter("module_id") != null) {
         moduleId = Long.parseLong(request.getParameter("module_id"));
@@ -23,7 +23,7 @@
     String markdown = "";
     MarkdownModel markdownModel = (MarkdownModel) request.getAttribute("markdown");
     if (markdownModel != null) {
-        projectId = markdownModel.getProjectId();
+        dirId = markdownModel.getDirId();
         moduleId = markdownModel.getModuleId();
         id = markdownModel.getId();
         name = markdownModel.getName();
@@ -59,7 +59,7 @@
             $.post(formAction,
                 {
                     id: markdownId,
-                    project_id: <%=projectId%>,
+                    project_id: <%=dirId%>,
                     module_id: moduleId,
                     name: mdName,
                     markdown: mdContent

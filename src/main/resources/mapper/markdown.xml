@@ -16,9 +16,9 @@
     <select id="getListByProject" resultType="io.github.xudaojie.jdoc.model.MarkdownModel">
         SELECT *
         FROM markdown
-        WHERE project_id = #{projectId}
+        WHERE dir_id = #{dirId}
     </select>
-    <!--#         project_id = #{projectId},-->
+    <!--#         project_id dirIdctId},-->
     <!--#         module_id = #{moduleId},-->
     <!--#         handler = #{handler}-->
     <!--#         content = #{content},-->
@@ -29,8 +29,8 @@
     </update>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"
         parameterType="io.github.xudaojie.jdoc.model.MarkdownModel">
-        INSERT INTO markdown (project_id, module_id, name, content, creator, handler)
-        VALUES (#{projectId}, #{moduleId}, #{name}, #{content}, #{creator}, #{handler})
+        INSERT INTO markdown (dir_id, name, content, creator, handler)
+        VALUES (#{dirId}, #{name}, #{content}, #{creator}, #{handler})
     </insert>
     <update id="delete">
         UPDATE markdown

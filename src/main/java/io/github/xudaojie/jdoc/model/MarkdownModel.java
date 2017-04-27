@@ -11,7 +11,7 @@ import java.util.Date;
  * Powered by duxing@Taobao
  */
 
-public class MarkdownModel implements Serializable{
+public class MarkdownModel extends FileModel implements Serializable{
     private static final long serialVersionUID = -1L;
 
     /**
@@ -41,15 +41,11 @@ public class MarkdownModel implements Serializable{
     /**
      * project_id
      */
-    private Long projectId;
+    private Long dirId;
     /**
      * handler
      */
     private Long handler;
-    /**
-     * module_id
-     */
-    private Long moduleId;
 
     private String name;
     private String description;
@@ -123,13 +119,13 @@ public class MarkdownModel implements Serializable{
     }
 
     /**
-     * projectId getter & setter
+     * dirId getter & setter
      */
-    public Long getProjectId() {
-        return projectId;
+    public Long getDirId() {
+        return dirId;
     }
-    public void setProjectId(Long projectId){
-        this.projectId = projectId;
+    public void setDirId(Long dirId){
+        this.dirId = dirId;
     }
 
     /**
@@ -140,16 +136,6 @@ public class MarkdownModel implements Serializable{
     }
     public void setHandler(Long handler){
         this.handler = handler;
-    }
-
-    /**
-     * moduleId getter & setter
-     */
-    public Long getModuleId() {
-        return moduleId;
-    }
-    public void setModuleId(Long moduleId){
-        this.moduleId = moduleId;
     }
 
     public String getDescription() {

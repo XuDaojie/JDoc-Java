@@ -123,7 +123,7 @@ public class ProjectController {
         return JsonUtils.toJSONString(responseBody);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "user/{user_id}/project/", produces = "application/json;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.GET, value = "user/{user_id}/project", produces = "application/json;charset=UTF-8")
     public String list(@PathVariable("user_id") Long userId) {
         BaseResponseBody responseBody = new BaseResponseBody();
 
@@ -133,7 +133,7 @@ public class ProjectController {
         return JsonUtils.toJSONString(responseBody);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "project/", produces = "application/json;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.GET, value = "project/{project_id}", produces = "application/json;charset=UTF-8")
     public String single(@PathVariable("project_id") Long projectId) {
         BaseResponseBody responseBody = new BaseResponseBody();
 
