@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Base64;
@@ -64,15 +65,14 @@ public class AccountController {
 
     @RequestMapping(method = RequestMethod.POST, value = "account", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String register(@RequestHeader("X-Access-Token") String token) {
-        DecodedJWT decodedJWT = TokenUtils.decode(token);
-        String username = decodedJWT.getClaim("username").asString();
-        String password = decodedJWT.getClaim("password").asString();
-        String nickname = decodedJWT.getClaim("nickname").asString();
+    public String register(@RequestParam("username") String username,
+                           @RequestParam("password") String password,
+                           @RequestParam(value = "nickname", required = false) String nickname) {
         AccountModel accountModel = new AccountModel();
         accountModel.setUsername(username);
         accountModel.setPassword(password);
-        accountModel.setNickname(nickname);
+        accountModel.setNickname("Default");
+//        accountModel.setNickname(System.currentTimeMillis() + "");
 
         BaseResponseBody responseBody = new BaseResponseBody();
         if (TextUtils.isEmpty(username)) {

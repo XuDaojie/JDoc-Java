@@ -20,6 +20,7 @@
         WHERE id = #{id}
     </update>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO account (username, password) VALUES (#{username}, #{password})
+        INSERT INTO account (username, password, nickname)
+        VALUES (#{username}, #{password}, #{nickname})
     </insert>
 </mapper>

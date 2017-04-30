@@ -50,6 +50,11 @@ public class MarkdownModel extends FileModel implements Serializable{
     private String name;
     private String description;
 
+    // 分享时使用的链接
+    private String pageUrl;
+    private String projectUrl;
+    private boolean readOnly;
+
     public String getName() {
         return name;
     }
@@ -144,5 +149,26 @@ public class MarkdownModel extends FileModel implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPageUrl() {
+        return pageUrl;
+    }
+    public void setPageUrl(String pageUrl) {
+        this.pageUrl = pageUrl;
+    }
+
+    public String getProjectUrl() {
+        return projectUrl;
+    }
+    public void setProjectUrl(String projectUrl) {
+        this.projectUrl = projectUrl;
+    }
+
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
     }
 }

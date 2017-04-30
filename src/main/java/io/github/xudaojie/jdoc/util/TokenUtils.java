@@ -9,6 +9,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 /**
  * Created by xdj on 2017/4/22.
@@ -51,6 +52,18 @@ public class TokenUtils {
                     .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(token);
             return jwt;
+        } catch (UnsupportedEncodingException exception) {
+            //UTF-8 encoding not supported
+        }
+        return null;
+    }
+
+    public static String create(Map<String, Object> headerClaims) throws JWTCreationException {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(SECRET);
+            return JWT.create()
+                    .withHeader(headerClaims)
+                    .sign(algorithm);
         } catch (UnsupportedEncodingException exception) {
             //UTF-8 encoding not supported
         }
