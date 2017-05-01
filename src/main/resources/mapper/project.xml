@@ -33,39 +33,39 @@
         SELECT *
         FROM dir
         WHERE name = #{name} AND owner = #{owner}
-              and is_project = 1
+              AND is_project = 1
     </select>
     <select id="getListByPublic" resultMap="projectResult">
         SELECT
-        project.id           AS project_id,
-        project.NAME         AS project_name,
-        project.description  AS project_description,
-        project.PASSWORD     AS project_password,
-        project.creator      AS project_creator,
-        project.OWNER        AS project_owner,
-        project.create_date  AS project_create_date,
-        project.update_date  AS project_update_date,
-        markdown.id          AS markdown_id,
-        markdown.NAME        AS markdown_name,
-        markdown.creator     AS markdown_creator,
-        markdown.HANDLER     AS markdown_handler,
-        markdown.create_date AS markdown_create_date,
-        markdown.update_date AS markdown_update_date,
-        markdown.description AS markdown_description
+            project.id           AS project_id,
+            project.NAME         AS project_name,
+            project.description  AS project_description,
+            project.PASSWORD     AS project_password,
+            project.creator      AS project_creator,
+            project.OWNER        AS project_owner,
+            project.create_date  AS project_create_date,
+            project.update_date  AS project_update_date,
+            markdown.id          AS markdown_id,
+            markdown.NAME        AS markdown_name,
+            markdown.creator     AS markdown_creator,
+            markdown.HANDLER     AS markdown_handler,
+            markdown.create_date AS markdown_create_date,
+            markdown.update_date AS markdown_update_date,
+            markdown.description AS markdown_description
         FROM
-        dir AS project
-        LEFT JOIN markdown ON project.id = markdown.dir_id
+            dir AS project
+            LEFT JOIN markdown ON project.id = markdown.dir_id
         WHERE
-        project.is_project = 1
-        AND project.is_public = 1
-        AND project.is_delete = 0
-        AND (
-        (
-        !(markdown.id IS NULL)
-        AND markdown.is_delete = 0
-        )
-        OR (markdown.id IS NULL)
-        )
+            project.is_project = 1
+            AND project.is_public = 1
+            AND project.is_delete = 0
+            AND (
+                (
+                    !(markdown.id IS NULL)
+                    AND markdown.is_delete = 0
+                )
+#                 OR (markdown.id IS NULL)
+            )
     </select>
     <select id="getListByOwner" resultMap="projectResult">
         SELECT
@@ -96,7 +96,7 @@
                     !(markdown.id IS NULL)
                     AND markdown.is_delete = 0
                 )
-                OR (markdown.id IS NULL)
+                #                 OR (markdown.id IS NULL)
             )
     </select>
     <update id="update">

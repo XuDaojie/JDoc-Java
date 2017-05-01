@@ -102,15 +102,23 @@ public class MarkdownController {
     @RequestMapping(method = RequestMethod.DELETE, value = "markdown", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String delete(@RequestHeader("X-Access-Token") String token,
-                         @RequestParam("user_id") Long userId,
                          @RequestParam("markdown_id") Long markdownId) {
+        DecodedJWT decodedJWT = TokenUtils.decode(token);
+        String aud = decodedJWT.getAudience().get(0);
+
         BaseResponseBody responseBody = new BaseResponseBody();
-        int rowCount = mMarkdownDAO.delete(markdownId);
-        if (rowCount > 0) {
-            responseBody.setCode(0);
-        } else {
+        MarkdownModel markdownModel = mMarkdownDAO.get(markdownId);
+        if (TextUtils.equals(markdownModel.getCreator().toString(), aud)) {
             responseBody.setCode(102);
-            responseBody.setMsg("删除失败");
+            responseBody.setMsg("无操作权限");
+        } else {
+            int rowCount = mMarkdownDAO.delete(markdownId);
+            if (rowCount > 0) {
+                responseBody.setCode(0);
+            } else {
+                responseBody.setCode(102);
+                responseBody.setMsg("删除失败");
+            }
         }
 
         return JsonUtils.toJSONString(responseBody);

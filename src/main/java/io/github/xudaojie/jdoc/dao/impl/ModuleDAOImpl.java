@@ -31,6 +31,6 @@ public class ModuleDAOImpl extends BaseDAO<ModuleModel> implements ModuleDAO {
 
     @Override
     public int delete(long id) {
-        return super.delete(id);
+        return super.upDelete(id);
     }
 }

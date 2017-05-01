@@ -34,12 +34,17 @@ public class HeaderFilter implements Filter {
             httpResponse = (HttpServletResponse) response;
 
             String token = httpRequest.getHeader("X-Access-Token");
+            String method = httpRequest.getMethod();
             if (!TextUtils.isEmpty(token)) {
                 DecodedJWT decodedJWT = TokenUtils.verify(token);
                 if (decodedJWT == null) {
 //                httpResponse.sendError(401, "授权失败");
                     httpResponse.sendRedirect("error/token");
                 }
+            }
+            else if (!TextUtils.equals("GET", method) && !TextUtils.equals("OPTIONS", method)) {
+                // post/upDelete/put 必须传token
+                httpResponse.sendRedirect("error/token");
             }
             // ReactJS通过Ajax请求时出错
             // http://zjblogs.com/js/Access-Control-Allow-Origin.html

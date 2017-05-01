@@ -32,7 +32,7 @@
         INSERT INTO markdown (dir_id, name, content, creator, handler)
         VALUES (#{dirId}, #{name}, #{content}, #{creator}, #{handler})
     </insert>
-    <update id="delete">
+    <update id="upDelete">
         UPDATE markdown
         SET is_delete = 1
         WHERE id = #{id}

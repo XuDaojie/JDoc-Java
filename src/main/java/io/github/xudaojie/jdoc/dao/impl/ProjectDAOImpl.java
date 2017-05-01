@@ -42,6 +42,6 @@ public class ProjectDAOImpl extends BaseDAO<ProjectModel> implements ProjectDAO 
 
     @Override
     public int delete(long id) {
-        return super.delete(id);
+        return super.upDelete(id);
     }
 }

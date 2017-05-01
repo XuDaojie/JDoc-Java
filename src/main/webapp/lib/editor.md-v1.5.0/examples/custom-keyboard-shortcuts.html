@@ -97,7 +97,7 @@ var testEditor = editormd("test-editormd", {
                         };
                         
                         this.cm.on("keyup", function(cm){
-                            //$("#test").remove();
+                            //$("#test").delete();
                         });
                         
                         // setting signle key
@@ -109,7 +109,7 @@ var testEditor = editormd("test-editormd", {
                         
                         this.addKeyMap(keyMap);
                         this.addKeyMap(keyMap2);
-                        this.removeKeyMap(keyMap2);  // remove signle key
+                        this.removeKeyMap(keyMap2);  // delete signle key
                     }
                 });    
             });

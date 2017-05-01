@@ -86,6 +86,7 @@ public class TokenUtils {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
             return JWT.create()
                     .withIssuer(withIssuer)
+                    .withAudience(withAud)
                     .sign(algorithm);
         } catch (UnsupportedEncodingException exception) {
             //UTF-8 encoding not supported
