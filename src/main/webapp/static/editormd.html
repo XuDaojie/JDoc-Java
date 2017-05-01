@@ -130,10 +130,10 @@
 
 
   |参数名|必选|类型|说明|
-  |:----    |:---|:----- |-----   |
-  |username |是  |string |用户名   |
-  |password |是  |string | 密码    |
-  |name     |否  |string | 昵称    |
+  |:---- |:---|:----- |----- |
+  |username |是 |string |用户名 |
+  |password |是 |string | 密码 |
+  |name |否 |string | 昵称 |
 
   **返回示例**
 
@@ -154,8 +154,8 @@
   **返回参数说明**
 
   |参数名|类型|说明|
-  |:-----  |:-----|-----                           |
-  |groupid |int   |用户组id，1：超级管理员；2：普通用户  |
+  |:----- |:-----|----- |
+  |groupid |int |用户组id，1：超级管理员；2：普通用户 |
 
   **备注**
 
@@ -165,7 +165,7 @@
 <script src="../lib/editor.md-v1.5.0/examples/js/jquery.min.js"></script>
 <script src="../lib/editor.md-v1.5.0/editormd.min.js"></script>
 <script type="text/javascript">
-  var BASE_URL = "http://localhost:8080/JDoc/";
+  var BASE_URL = location.origin + "/JDoc/";
   var mdData;
   var editor;
 
@@ -178,9 +178,9 @@
       onload: function () {
         var markdownId = getUrlParam('markdown_id');
         $.ajax({
-          url: "http://localhost:8080/JDoc/markdown/" + markdownId,
+          url: BASE_URL + "markdown/" + markdownId,
           headers: {
-            headers: {"X-Access-Token": ''},
+            "X-Access-Token": '',
           },
           success: function (result, jqXHR) {
             if (result.code === 0) {
@@ -188,7 +188,8 @@
               editor.insertValue(result.data.content);
               $("#md_name").val(result.data.name);
             }
-          },
+          }
+          ,
           error: function (jqXHR, status, errorThrown) {
             alert("数据加载失败,请刷新");
           }

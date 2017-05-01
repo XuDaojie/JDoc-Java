@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+
 import io.github.xudaojie.jdoc.dao.MarkdownDAO;
 import io.github.xudaojie.jdoc.dao.ProjectDAO;
 import io.github.xudaojie.jdoc.model.BaseResponseBody;
@@ -182,8 +184,10 @@ public class MarkdownController {
 
     @RequestMapping(method = RequestMethod.GET, value = "markdown/{id}", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String single(@RequestHeader(value = "X-Access-Token") String token,
-                         @RequestHeader("Origin") String origin,
+    public String single(HttpServletRequest request,
+            @RequestHeader(value = "X-Access-Token") String token,
+//                         @RequestHeader("Origin") String origin,
+                         @RequestHeader("Host") String host,
                          @PathVariable("id") Long id,
                          @RequestParam(value = "it", required = false) String it) {
         // it字段用来判断是显示单页还是项目
@@ -197,6 +201,7 @@ public class MarkdownController {
             map.put("is_page", false);
             // http://localhost:3000/markdown/1?it=token
             // http://localhost:8080/JDoc/markdown/1?it=token 转发
+            String origin = request.getScheme() + "://" + host;
             markdownModel.setProjectUrl(
                     origin + "?markdown_id=" + id + "&it=" + TokenUtils.create(map));
             if (TextUtils.isEmpty(token)) {
@@ -219,9 +224,9 @@ public class MarkdownController {
     @RequestMapping(method = RequestMethod.GET, value = "markdown", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String singleMd(@RequestHeader(value = "X-Access-Token") String token,
-                         @RequestHeader("Origin") String origin,
-                         @RequestParam("markdown_id") Long id,
-                         @RequestParam(value = "it", required = false) String it) {
+                           @RequestHeader("Origin") String origin,
+                           @RequestParam("markdown_id") Long id,
+                           @RequestParam(value = "it", required = false) String it) {
         // it字段用来判断是显示单页还是项目
         MarkdownModel markdownModel = mMarkdownDAO.get(id);
         // jwt markdown_id=1, is_page=true",
