@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Base64;
 
 import io.github.xudaojie.jdoc.dao.AccountDAO;
+import io.github.xudaojie.jdoc.dao.MarkdownDAO;
 import io.github.xudaojie.jdoc.model.AccountModel;
 import io.github.xudaojie.jdoc.model.BaseResponseBody;
+import io.github.xudaojie.jdoc.model.MarkdownModel;
+import io.github.xudaojie.jdoc.model.ProjectModel;
 import io.github.xudaojie.jdoc.util.JsonUtils;
 import io.github.xudaojie.jdoc.util.TextUtils;
 import io.github.xudaojie.jdoc.util.TokenUtils;
@@ -27,6 +30,8 @@ public class AccountController {
 
     @Autowired
     private AccountDAO mAccountDAO;
+    @Autowired
+    private MarkdownDAO mMarkdownDAO;
 
     public AccountDAO getAccountDAO() {
         return mAccountDAO;
@@ -85,6 +90,7 @@ public class AccountController {
             AccountModel selectAccountModel = mAccountDAO.getByName(username);
             if (selectAccountModel == null) {
                 if (mAccountDAO.insert(accountModel) > 0) {
+                    initMarkdown(accountModel.getId());
                     responseBody.setData(accountModel);
                 }
             } else {
@@ -126,5 +132,24 @@ public class AccountController {
         }
 
         return responseBody;
+    }
+
+    private void initMarkdown(Long userId) {
+        ProjectModel projectModel = new ProjectModel();
+        projectModel.setName("示例");
+        projectModel.setPassword(null);
+        projectModel.setOwner(userId);
+        projectModel.setCreator(userId);
+
+        MarkdownModel markdownModel = new MarkdownModel();
+//        markdownModel.setDirId(projectId);
+//        markdownModel.setModuleId(moduleId);
+        markdownModel.setName("README.md");
+        markdownModel.setContent("README");
+        markdownModel.setDescription("");
+//        markdownModel.setPassword(password);
+        markdownModel.setHandler(userId);
+        markdownModel.setCreator(userId);
+        mMarkdownDAO.insert(markdownModel, projectModel);
     }
 }

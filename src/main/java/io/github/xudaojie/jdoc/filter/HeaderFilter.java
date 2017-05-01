@@ -42,10 +42,10 @@ public class HeaderFilter implements Filter {
                     httpResponse.sendRedirect("error/token");
                 }
             }
-            else if (!TextUtils.equals("GET", method) && !TextUtils.equals("OPTIONS", method)) {
-                // post/upDelete/put 必须传token
-                httpResponse.sendRedirect("error/token");
-            }
+//            else if (!TextUtils.equals("GET", method) && !TextUtils.equals("OPTIONS", method)) {
+//                // post/upDelete/put 必须传token
+//                httpResponse.sendRedirect("error/token");
+//            }
             // ReactJS通过Ajax请求时出错
             // http://zjblogs.com/js/Access-Control-Allow-Origin.html
             // http://stackoverflow.com/questions/25727306/request-header-field-access-control-allow-headers-is-not-allowed-by-access-contr
