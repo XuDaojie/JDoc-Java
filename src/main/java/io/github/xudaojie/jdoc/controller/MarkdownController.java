@@ -186,7 +186,7 @@ public class MarkdownController {
     @ResponseBody
     public String single(HttpServletRequest request,
             @RequestHeader(value = "X-Access-Token") String token,
-//                         @RequestHeader("Origin") String origin,
+                         @RequestHeader(value = "Origin", required = false) String origin,
                          @RequestHeader("Host") String host,
                          @PathVariable("id") Long id,
                          @RequestParam(value = "it", required = false) String it) {
@@ -201,7 +201,10 @@ public class MarkdownController {
             map.put("is_page", false);
             // http://localhost:3000/markdown/1?it=token
             // http://localhost:8080/JDoc/markdown/1?it=token 转发
-            String origin = request.getScheme() + "://" + host;
+            if (TextUtils.isEmpty(origin)) {
+                // 由Java项目内部的请求
+                origin = request.getScheme() + "://" + host;
+            }
             markdownModel.setProjectUrl(
                     origin + "?markdown_id=" + id + "&it=" + TokenUtils.create(map));
             if (TextUtils.isEmpty(token)) {
@@ -221,39 +224,42 @@ public class MarkdownController {
         return JsonUtils.toJSONString(responseBody);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "markdown", produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String singleMd(@RequestHeader(value = "X-Access-Token") String token,
-                           @RequestHeader("Origin") String origin,
-                           @RequestParam("markdown_id") Long id,
-                           @RequestParam(value = "it", required = false) String it) {
-        // it字段用来判断是显示单页还是项目
-        MarkdownModel markdownModel = mMarkdownDAO.get(id);
-        // jwt markdown_id=1, is_page=true",
-        // json "read_only=true,
-        BaseResponseBody responseBody = new BaseResponseBody();
-        if (markdownModel != null) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("markdown_id", id);
-            map.put("is_page", false);
-            // http://localhost:3000/markdown/1?it=token
-            // http://localhost:8080/JDoc/markdown/1?it=token 转发
-            markdownModel.setProjectUrl(
-                    origin + "?markdown_id=" + id + "&it=" + TokenUtils.create(map));
-            if (TextUtils.isEmpty(token)) {
-                // 没有带token的肯定为只读
-                markdownModel.setReadOnly(true);
-            } else {
-//                DecodedJWT decodedJWT = TokenUtils.decode(token);
-//                decodedJWT.getClaim("id");
-            }
-            responseBody.setCode(0);
-            responseBody.setData(markdownModel);
-        } else {
-            responseBody.setCode(102);
-            responseBody.setMsg("内容不存在");
-        }
-
-        return JsonUtils.toJSONString(responseBody);
-    }
+    /**
+     * 分享出来的链接
+     */
+//    @RequestMapping(method = RequestMethod.GET, value = "markdown", produces = "application/json;charset=UTF-8")
+//    @ResponseBody
+//    public String singleMd(@RequestHeader(value = "X-Access-Token") String token,
+//                           @RequestHeader("Origin") String origin,
+//                           @RequestParam("markdown_id") Long id,
+//                           @RequestParam(value = "it", required = false) String it) {
+//        // it字段用来判断是显示单页还是项目
+//        MarkdownModel markdownModel = mMarkdownDAO.get(id);
+//        // jwt markdown_id=1, is_page=true",
+//        // json "read_only=true,
+//        BaseResponseBody responseBody = new BaseResponseBody();
+//        if (markdownModel != null) {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("markdown_id", id);
+//            map.put("is_page", false);
+//            // http://localhost:3000/markdown/1?it=token
+//            // http://localhost:8080/JDoc/markdown/1?it=token 转发
+//            markdownModel.setProjectUrl(
+//                    origin + "?markdown_id=" + id + "&it=" + TokenUtils.create(map));
+//            if (TextUtils.isEmpty(token)) {
+//                // 没有带token的肯定为只读
+//                markdownModel.setReadOnly(true);
+//            } else {
+////                DecodedJWT decodedJWT = TokenUtils.decode(token);
+////                decodedJWT.getClaim("id");
+//            }
+//            responseBody.setCode(0);
+//            responseBody.setData(markdownModel);
+//        } else {
+//            responseBody.setCode(102);
+//            responseBody.setMsg("内容不存在");
+//        }
+//
+//        return JsonUtils.toJSONString(responseBody);
+//    }
 }
