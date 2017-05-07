@@ -46,12 +46,11 @@ public class HeaderFilter implements Filter {
 //                // post/upDelete/put 必须传token
 //                httpResponse.sendRedirect("error/token");
 //            }
-            // ReactJS通过Ajax请求时出错
+            // ReactJS通过Ajax请求时出错 解决跨域
             // http://zjblogs.com/js/Access-Control-Allow-Origin.html
             // http://stackoverflow.com/questions/25727306/request-header-field-access-control-allow-headers-is-not-allowed-by-access-contr
-            httpResponse.setHeader("Access-Control-Allow-Origin", "*");
-            httpResponse.setHeader("Access-Control-Allow-Headers", "X-Access-Token,Authorization");
-
+//            httpResponse.setHeader("Access-Control-Allow-Origin", "*");
+//            httpResponse.setHeader("Access-Control-Allow-Headers", "X-Access-Token,Authorization");
         }
 
         chain.doFilter(request, response);

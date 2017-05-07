@@ -49,16 +49,16 @@ public class MarkdownController {
 
     @RequestMapping(method = RequestMethod.POST, value = "markdown", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String insert(@RequestHeader("X-Access-Token") String token) {
-        DecodedJWT decodedJWT = TokenUtils.decode(token);
-        Long userId = decodedJWT.getClaim("user_id").as(Long.class);
-//        Long projectId = decodedJWT.getClaim("project_id").as(Long.class);
-        String projectName = decodedJWT.getClaim("project_name").asString();
-        String projectPwd = decodedJWT.getClaim("project_password").asString();
-        String name = decodedJWT.getClaim("name").asString();
-        String content = decodedJWT.getClaim("content").asString();
-        String description = decodedJWT.getClaim("description").asString();
-//        String password = decodedJWT.getClaim("password").asString();
+    public String insert(@RequestHeader("X-Access-Token") String token,
+                         @RequestParam("user_id") Long userId,
+                         @RequestParam("project_name") String projectName,
+                         @RequestParam(value = "project_password", required = false) String projectPwd,
+                         @RequestParam("name") String name,
+                         @RequestParam(value = "content", required = false) String content,
+                         @RequestParam(value = "description", required = false) String description) {
+        if (TextUtils.isEmpty(content)) {
+            content = "请输入文档内容";
+        }
 
         MarkdownModel markdownModel = new MarkdownModel();
 //        markdownModel.setDirId(projectId);
@@ -185,7 +185,7 @@ public class MarkdownController {
     @RequestMapping(method = RequestMethod.GET, value = "markdown/{id}", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String single(HttpServletRequest request,
-            @RequestHeader(value = "X-Access-Token") String token,
+                         @RequestHeader(value = "X-Access-Token") String token,
                          @RequestHeader(value = "Origin", required = false) String origin,
                          @RequestHeader("Host") String host,
                          @PathVariable("id") Long id,
