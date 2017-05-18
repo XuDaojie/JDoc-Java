@@ -21,11 +21,15 @@ import io.github.xudaojie.jdoc.model.ProjectModel;
 import io.github.xudaojie.jdoc.util.JsonUtils;
 import io.github.xudaojie.jdoc.util.TextUtils;
 import io.github.xudaojie.jdoc.util.TokenUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ResponseHeader;
 
 /**
  * Created by xdj on 2017/4/18.
  */
 @Controller
+@Api(description = "账户")
 public class AccountController {
 
     @Autowired
@@ -41,6 +45,10 @@ public class AccountController {
         mAccountDAO = accountDAO;
     }
 
+    @ApiOperation(
+            value = "登录",
+            response = BaseResponseBody.class
+    )
     @RequestMapping(method = RequestMethod.GET, value = "account", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String login(@RequestHeader("Authorization") String auth) {
@@ -68,9 +76,10 @@ public class AccountController {
         return JsonUtils.toJSONString(responseBody);
     }
 
+    @ApiOperation("注册")
     @RequestMapping(method = RequestMethod.POST, value = "account", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String register(@RequestParam("username") String username,
+    public BaseResponseBody<AccountModel> register(@RequestParam("username") String username,
                            @RequestParam("password") String password,
                            @RequestParam(value = "nickname", required = false) String nickname) {
         AccountModel accountModel = new AccountModel();
@@ -79,13 +88,13 @@ public class AccountController {
         accountModel.setNickname("Default");
 //        accountModel.setNickname(System.currentTimeMillis() + "");
 
-        BaseResponseBody responseBody = new BaseResponseBody();
+        BaseResponseBody<AccountModel> responseBody = new BaseResponseBody<>();
         if (TextUtils.isEmpty(username)) {
             responseBody.setCode(12);
-            responseBody.setData("用户名不能为空");
+            responseBody.setMsg("用户名不能为空");
         } else if (TextUtils.isEmpty(password)) {
             responseBody.setCode(12);
-            responseBody.setData("密码不能为空");
+            responseBody.setMsg("密码不能为空");
         } else {
             AccountModel selectAccountModel = mAccountDAO.getByName(username);
             if (selectAccountModel == null) {
@@ -99,9 +108,10 @@ public class AccountController {
             }
         }
 
-        return JsonUtils.toJSONString(responseBody);
+        return responseBody;
     }
 
+    @ApiOperation("修改用户信息")
     @RequestMapping(method = RequestMethod.PUT, value = "account", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public BaseResponseBody update(@RequestHeader("X-Access-Token") String token) {

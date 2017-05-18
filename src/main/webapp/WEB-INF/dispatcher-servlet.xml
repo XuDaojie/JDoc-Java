@@ -10,6 +10,14 @@
     <!-- if you use annotation you must configure following setting -->
     <mvc:annotation-driven/>
 
+    <!-- Scan some API controllers-->
+    <!--<context:component-scan base-package="io.github.xudaojie.jdoc.controller"/>-->
+    <!-- Enables swgger ui-->
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <!-- Include a swagger configuration-->
+    <bean name="/applicationSwaggerConfig" class="io.github.xudaojie.jdoc.Swagger2Config"/>
+
     <!-- 基于@AspectJ切面的驱动器 -->
     <aop:aspectj-autoproxy/>
     <bean class="io.github.xudaojie.jdoc.aop.LogInterceptor"/>

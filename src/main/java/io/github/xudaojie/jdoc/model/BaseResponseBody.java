@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by xdj on 2017/4/19.
  */
-public class BaseResponseBody implements Serializable {
+public class BaseResponseBody<T> implements Serializable {
 
     /**
      * code : 0
@@ -26,7 +26,7 @@ public class BaseResponseBody implements Serializable {
     private int code;
     private String msg;
     private String token;
-    private Object data;
+    private T data;
 
     public int getCode() {
         return code;
@@ -52,11 +52,11 @@ public class BaseResponseBody implements Serializable {
         this.token = token;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 }
