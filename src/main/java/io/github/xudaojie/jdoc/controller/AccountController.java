@@ -23,7 +23,6 @@ import io.github.xudaojie.jdoc.util.TextUtils;
 import io.github.xudaojie.jdoc.util.TokenUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ResponseHeader;
 
 /**
  * Created by xdj on 2017/4/18.

@@ -3,85 +3,85 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
     version="3.1">
-    <filter>
-        <filter-name>charsetEncodeFilter</filter-name>
-        <filter-class>io.github.xudaojie.jdoc.filter.CharsetEncodeFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>charsetEncodeFilter</filter-name>
-        <url-pattern>*</url-pattern>
-    </filter-mapping>
-    <filter>
-        <filter-name>headerFilter</filter-name>
-        <filter-class>io.github.xudaojie.jdoc.filter.HeaderFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>headerFilter</filter-name>
-        <url-pattern>*</url-pattern>
-    </filter-mapping>
-    <filter>
-        <filter-name>HiddenHttpMethodFilter</filter-name>
-        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
-    </filter>
+    <!--<filter>-->
+        <!--<filter-name>charsetEncodeFilter</filter-name>-->
+        <!--<filter-class>io.github.xudaojie.jdoc.filter.CharsetEncodeFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>charsetEncodeFilter</filter-name>-->
+        <!--<url-pattern>*</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!--<filter>-->
+        <!--<filter-name>headerFilter</filter-name>-->
+        <!--<filter-class>io.github.xudaojie.jdoc.filter.HeaderFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>headerFilter</filter-name>-->
+        <!--<url-pattern>*</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!--<filter>-->
+        <!--<filter-name>HiddenHttpMethodFilter</filter-name>-->
+        <!--<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>-->
+    <!--</filter>-->
 
-    <filter-mapping>
-        <filter-name>HiddenHttpMethodFilter</filter-name>
-        <servlet-name>*</servlet-name>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>HiddenHttpMethodFilter</filter-name>-->
+        <!--<servlet-name>*</servlet-name>-->
+    <!--</filter-mapping>-->
 
-    <!-- Spring MVC start-->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/applicationContext.xml</param-value>
-    </context-param>
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+    <!--&lt;!&ndash; Spring MVC start&ndash;&gt;-->
+    <!--<context-param>-->
+        <!--<param-name>contextConfigLocation</param-name>-->
+        <!--<param-value>/WEB-INF/applicationContext.xml</param-value>-->
+    <!--</context-param>-->
+    <!--<listener>-->
+        <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+    <!--</listener>-->
 
-    <!-- 所有以springMVC开头的请求都会被DispatcherServlet处理 -->
-    <servlet>
-        <servlet-name>dispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!--&lt;!&ndash; 所有以springMVC开头的请求都会被DispatcherServlet处理 &ndash;&gt;-->
+    <!--<servlet>-->
+        <!--<servlet-name>dispatcher</servlet-name>-->
+        <!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
 
-        <!--
-            init-param 参数 contextConfigLocation 用来指定 Spring 的配制文件, classpath: 是指 WEB-INF/classes 目录
-            这个参数也可以不指定，如果不指定，spring 默认查找 WEB-INF/classes/<servlet-name>-servlet.xml 的文件。
-        -->
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>WEB-INF/dispatcher-servlet.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.form</url-pattern>
-    </servlet-mapping>
+        <!--&lt;!&ndash;-->
+            <!--init-param 参数 contextConfigLocation 用来指定 Spring 的配制文件, classpath: 是指 WEB-INF/classes 目录-->
+            <!--这个参数也可以不指定，如果不指定，spring 默认查找 WEB-INF/classes/<servlet-name>-servlet.xml 的文件。-->
+        <!--&ndash;&gt;-->
+        <!--<init-param>-->
+            <!--<param-name>contextConfigLocation</param-name>-->
+            <!--<param-value>WEB-INF/dispatcher-servlet.xml</param-value>-->
+        <!--</init-param>-->
+        <!--<load-on-startup>1</load-on-startup>-->
+    <!--</servlet>-->
     <!--<servlet-mapping>-->
-    <!--<servlet-name>dispatcher</servlet-name>-->
-    <!--<url-pattern>*.do</url-pattern>-->
+        <!--<servlet-name>dispatcher</servlet-name>-->
+        <!--<url-pattern>/</url-pattern>-->
     <!--</servlet-mapping>-->
     <!--<servlet-mapping>-->
-    <!--<servlet-name>dispatcher</servlet-name>-->
-    <!--<url-pattern>/api/*</url-pattern>-->
+        <!--<servlet-name>dispatcher</servlet-name>-->
+        <!--<url-pattern>*.form</url-pattern>-->
     <!--</servlet-mapping>-->
-    <!-- Spring MVC end-->
+    <!--&lt;!&ndash;<servlet-mapping>&ndash;&gt;-->
+    <!--&lt;!&ndash;<servlet-name>dispatcher</servlet-name>&ndash;&gt;-->
+    <!--&lt;!&ndash;<url-pattern>*.do</url-pattern>&ndash;&gt;-->
+    <!--&lt;!&ndash;</servlet-mapping>&ndash;&gt;-->
+    <!--&lt;!&ndash;<servlet-mapping>&ndash;&gt;-->
+    <!--&lt;!&ndash;<servlet-name>dispatcher</servlet-name>&ndash;&gt;-->
+    <!--&lt;!&ndash;<url-pattern>/api/*</url-pattern>&ndash;&gt;-->
+    <!--&lt;!&ndash;</servlet-mapping>&ndash;&gt;-->
+    <!--&lt;!&ndash; Spring MVC end&ndash;&gt;-->
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/404.html</location>
-    </error-page>
+    <!--<error-page>-->
+        <!--<error-code>404</error-code>-->
+        <!--<location>/404.html</location>-->
+    <!--</error-page>-->
 
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>*.html</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>/lib/*</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>default</servlet-name>-->
+        <!--<url-pattern>*.html</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>default</servlet-name>-->
+        <!--<url-pattern>/lib/*</url-pattern>-->
+    <!--</servlet-mapping>-->
 </web-app>

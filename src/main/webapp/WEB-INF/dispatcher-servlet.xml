@@ -6,42 +6,32 @@
     xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <context:component-scan base-package="io.github.xudaojie.jdoc.controller"/>
-    <!-- if you use annotation you must configure following setting -->
-    <mvc:annotation-driven/>
-
-    <!-- Scan some API controllers-->
     <!--<context:component-scan base-package="io.github.xudaojie.jdoc.controller"/>-->
-    <!-- Enables swgger ui-->
-    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
-    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
-    <!-- Include a swagger configuration-->
-    <bean name="/applicationSwaggerConfig" class="io.github.xudaojie.jdoc.Swagger2Config"/>
+    <!--&lt;!&ndash; if you use annotation you must configure following setting &ndash;&gt;-->
+    <!--<mvc:annotation-driven/>-->
 
-    <!-- 基于@AspectJ切面的驱动器 -->
-    <aop:aspectj-autoproxy/>
-    <bean class="io.github.xudaojie.jdoc.aop.LogInterceptor"/>
+    <!--&lt;!&ndash; Scan some API controllers&ndash;&gt;-->
+    <!--&lt;!&ndash;<context:component-scan base-package="io.github.xudaojie.jdoc.controller"/>&ndash;&gt;-->
+    <!--&lt;!&ndash; Enables swgger ui&ndash;&gt;-->
+    <!--<mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>-->
+    <!--<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>-->
+    <!--&lt;!&ndash; Include a swagger configuration&ndash;&gt;-->
+    <!--<bean name="/applicationSwaggerConfig" claio.github.xudaojie.jdoc.config.Swagger2Confignfig"/>-->
 
-    <!-- 跨域访问配置 -->
-    <mvc:cors>
-        <mvc:mapping path="/**"/>
-    </mvc:cors>
+    <!--&lt;!&ndash; 基于@AspectJ切面的驱动器 &ndash;&gt;-->
+    <!--<aop:aspectj-autoproxy/>-->
+    <!--<bean class="io.github.xudaojie.jdoc.aop.LogInterceptor"/>-->
+
+    <!--&lt;!&ndash; 跨域访问配置 &ndash;&gt;-->
     <!--<mvc:cors>-->
-        <!--<mvc:mapping path="/api/**"-->
-            <!--allowed-origins="http://domain1.com, http://domain2.com"-->
-            <!--allowed-methods="GET, PUT"-->
-            <!--allowed-headers="header1, header2, header3"-->
-            <!--exposed-headers="header1, header2" allow-credentials="false"-->
-            <!--max-age="123" />-->
-        <!--<mvc:mapping path="/resources/**"-->
-            <!--allowed-origins="http://domain1.com" />-->
+        <!--<mvc:mapping path="/**"/>-->
     <!--</mvc:cors>-->
-    <!-- configure the InternalResourceViewResolver -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-        id="internalResourceViewResolver">
-        <!-- 前缀 -->
-        <property name="prefix" value="/mvc/" />
-        <!-- 后缀 -->
-        <property name="suffix" value=".jsp" />
-    </bean>
+    <!--&lt;!&ndash; configure the InternalResourceViewResolver &ndash;&gt;-->
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"-->
+        <!--id="internalResourceViewResolver">-->
+        <!--&lt;!&ndash; 前缀 &ndash;&gt;-->
+        <!--<property name="prefix" value="/mvc/" />-->
+        <!--&lt;!&ndash; 后缀 &ndash;&gt;-->
+        <!--<property name="suffix" value=".jsp" />-->
+    <!--</bean>-->
 </beans>
