@@ -1,7 +1,5 @@
 package io.github.xudaojie.jdoc.util;
 
-import com.sun.istack.internal.Nullable;
-
 /**
  * Created by xdj on 2017/4/2.
  */
@@ -22,7 +20,7 @@ public class TextUtils {
         return false;
     }
 
-    public static boolean isEmpty(@Nullable CharSequence str) {
+    public static boolean isEmpty(CharSequence str) {
         if (str == null || str.length() == 0)
             return true;
         else
