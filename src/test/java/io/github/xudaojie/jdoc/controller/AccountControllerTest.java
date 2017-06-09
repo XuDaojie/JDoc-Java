@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 //@RunWith(SpringJUnit4ClassRunner.class) SpringRunner extends SpringJUnit4ClassRunner
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class AccountControllerTest {
 
     @Autowired
